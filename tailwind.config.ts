@@ -6,7 +6,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        primary: ['Inter', ...defaultTheme.fontFamily.sans],
+        primary: ['Kurale', ...defaultTheme.fontFamily.sans],
+        secondary: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: {
