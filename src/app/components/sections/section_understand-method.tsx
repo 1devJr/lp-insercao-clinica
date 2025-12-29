@@ -1,49 +1,61 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
-import { useState } from 'react';
 
 import './animations.css';
 
-import SpotlightCard from '@/app/animations/spotlight-card';
+import FlipCard from '@/app/animations/flip-card';
 
 interface MentoringItemProps {
   image: string;
   text: string;
+  backContent: string;
   index: number;
 }
 
-const MethodItem = ({ image, text }: MentoringItemProps) => {
-  const [showContent, setShowContent] = useState(false);
-
+const MethodItem = ({ image, text, backContent }: MentoringItemProps) => {
   return (
-    <SpotlightCard
-      className='relative text-white'
-      onHover={(status) => {
-        status ? setShowContent(true) : setShowContent(false);
-      }}
-    >
-      <Image
-        src={image}
-        alt='Mentoring Icon'
-        width={50}
-        height={50}
-        className='w-auto h-auto md:ml-4 md:mt-0'
-      />
-      <span className='text-center w-full  pb-4'> {text} </span>
-      <div className='min-h-[68px]'>
-        {showContent && (
-          <span className='animate-fade-in-line-by-line text-center'>
-            {'Mais conteudo neste card... Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus magni eos, dolorum nobis accusamus totam blanditiis quaerat deserunt qui facilis consequatur? Quos qui iusto, aliquid tempora dolore ipsa voluptates optio!'
-              .split(/(?<=\.)\s+/)
-              .map((line, index) => (
-                <span key={index} style={{ ['--line-index' as string]: index }}>
-                  {line}
-                </span>
-              ))}
+    <FlipCard
+      className='text-[#0B0F12]'
+      height={340}
+      width='100%'
+      front={
+        <div className='flex h-full w-full flex-col items-center justify-center gap-4 text-center bg-transparent rounded-2xl p-6'>
+          <div className='w-16 h-16 flex items-center justify-center'>
+            <Image
+              src={image}
+              alt='Mentoring Icon'
+              width={60}
+              height={60}
+              className='w-auto h-auto'
+              style={{
+                filter:
+                  'brightness(0) saturate(100%) invert(5%) sepia(8%) saturate(1089%) hue-rotate(155deg) brightness(97%) contrast(93%)',
+              }}
+            />
+          </div>
+          <span className='text-lg font-semibold w-full px-4 text-[#0B0F12]'>
+            {text}
           </span>
-        )}
-      </div>
-    </SpotlightCard>
+          {/* Texto diferente para mobile vs desktop */}
+          <span className='text-sm text-[#0B0F12]/60 px-6 hidden md:block'>
+            Passe o mouse para virar
+          </span>
+          <span className='text-sm text-[#0B0F12]/60 px-6 md:hidden'>
+            Role para ver mais
+          </span>
+        </div>
+      }
+      back={
+        <div className='flex h-full w-full flex-col items-center justify-center gap-4 text-center bg-transparent rounded-2xl p-6'>
+          <span className='text-lg font-semibold text-[#0B0F12]'>
+            Mais detalhes
+          </span>
+          <p className='text-sm leading-relaxed text-[#0B0F12]/80 px-2'>
+            {backContent}
+          </p>
+        </div>
+      }
+    />
   );
 };
 
@@ -58,44 +70,56 @@ export default function SectionUnderstandMethod() {
     {
       image: '/images/MetodoIcon1.svg',
       text: 'Capacitação básica em TCC e Contextuais',
+      backContent:
+        'Aprenda os fundamentos da Terapia Cognitivo-Comportamental e abordagens contextuais para aplicar na prática clínica com segurança.',
     },
     {
       image: '/images/MetodoIcon2.svg',
-      text: `Aprendizado do processo administrativo de um consultório`,
+      text: 'Aprendizado do processo administrativo de um consultório',
+      backContent:
+        'Domine a gestão do seu consultório: agendamentos, prontuários, contratos e tudo que você precisa para uma clínica organizada.',
     },
     {
       image: '/images/MetodoIcon3.svg',
-      text: `Acompanhamento e suporte com profissional experiente`,
+      text: 'Acompanhamento e suporte com profissional experiente',
+      backContent:
+        'Tenha supervisão individualizada com psicólogos experientes para tirar dúvidas e desenvolver suas habilidades clínicas.',
     },
     {
       image: '/images/MetodoIcon4.svg',
-      text: `Acompanhamento e suporte com profissional experiente`,
+      text: 'Acompanhamento e suporte com profissional experiente',
+      backContent:
+        'Receba feedback contínuo sobre seus atendimentos e evolua com orientações personalizadas para cada caso.',
     },
     {
       image: '/images/MetodoIcon5.svg',
-      text: `Acompanhamento e suporte com profissional experiente`,
+      text: 'Acompanhamento e suporte com profissional experiente',
+      backContent:
+        'Participe de grupos de discussão de casos e amplie sua visão clínica com diferentes perspectivas.',
     },
-    // Adicione mais objetos aqui conforme necessário
   ];
 
   return (
     <>
-      <div className='section-mentoring  bg-[#3C3B39] relative p-10'>
-        {/* Titulo que ocupa 100% da tela e com um traço embaixo */}
+      <div className='section-mentoring bg-[#C67A5B] relative p-10'>
         <div className='w-full flex justify-center items-center flex-col'>
-          <h1 className='text-6xl  font-bold text-[#FCF8F0] text-center'>
+          <h1 className='text-6xl font-bold text-[#0B0F12] text-center'>
             Entenda nosso método
           </h1>
-          <span className=' border-b-4 w-28 mt-7 border-b-[#277D7D]'></span>
+          <span className='border-b-4 w-28 mt-7 border-b-[#234A57]'></span>
         </div>
-        <div className='flex flex-wrap justify-between gap-5 w-full max-w-7xl mx-auto py-20 px-4 items-start '>
-          {/* Estrutura dinâmica com repetição */}
+        <div className='flex flex-wrap justify-center gap-6 w-full max-w-7xl mx-auto py-20 px-4'>
           {mentoringItems.map((item, index) => (
             <div
               key={index}
-              className='flex flex-col min-h-96 min-w-[350px] items-center justify-start rounded-lg flex-[1_1_calc(33.333%-90px)]'
+              className='flex flex-col items-center justify-start w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]'
             >
-              <MethodItem text={item.text} image={item.image} index={index} />
+              <MethodItem
+                text={item.text}
+                image={item.image}
+                backContent={item.backContent}
+                index={index}
+              />
             </div>
           ))}
         </div>

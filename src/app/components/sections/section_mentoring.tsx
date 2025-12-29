@@ -11,19 +11,21 @@ interface MentoringItemProps {
 
 const MentoringItem = ({ image, text, index }: MentoringItemProps) => (
   <div
-    className={`flex flex-col justify-center items-center gap-20  ${
+    className={`flex flex-col justify-center items-center gap-12  ${
       index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
     }  items-center   w-full`}
   >
     <div className='md:w-4/5 w-full text-justify text-black text-lg'>
-      <p className='text-justify w-full text-3xl '>{text}</p>
+      <p className='text-justify w-full text-xl md:text-2xl leading-relaxed'>
+        {text}
+      </p>
     </div>
     <div className='md:w-1/5 w-full flex items-center justify-center md:justify-normal md:items-start mt-4 md:mt-0'>
       <Image
         src={image}
         alt='Mentoring Icon'
-        width={100}
-        height={100}
+        width={80}
+        height={80}
         className='w-auto h-auto md:ml-4 md:mt-0'
       />
     </div>
@@ -58,12 +60,12 @@ export default function SectionMentoring() {
       <div className='section-mentoring  bg-[#FCF8F0] relative p-10'>
         {/* Titulo que ocupa 100% da tela e com um traço embaixo */}
         <div className='w-full flex justify-center items-center flex-col'>
-          <h1 className='text-6xl  font-bold text-black text-center'>
+          <h1 className='text-4xl md:text-5xl font-bold text-black text-center'>
             Sobre a Mentoria
           </h1>
-          <span className=' border-b-4 w-28 mt-7 border-b-amber-900'></span>
+          <span className=' border-b-4 w-28 mt-5 border-b-[#C67A5B]'></span>
         </div>
-        <div className='flex flex-col items-center justify-center gap-20 w-full max-w-6xl mx-auto py-20 px-4'>
+        <div className='flex flex-col items-center justify-center gap-14 w-full max-w-5xl mx-auto py-16 px-4'>
           {/* Estrutura dinâmica com repetição */}
           {mentoringItems.map((item, index) => (
             <AnimatedContent

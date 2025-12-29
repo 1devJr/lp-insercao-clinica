@@ -4,6 +4,7 @@ import Head from 'next/head';
 import * as React from 'react';
 import '@/lib/env';
 
+import SectionCronograma from './components/sections/section_cronograma';
 import SectionHero from './components/sections/section_hero';
 import SectionMentoring from './components/sections/section_mentoring';
 import SectionUnderstandMethod from './components/sections/section_understand-method';
@@ -30,6 +31,7 @@ export default function HomePage() {
         <SectionHero></SectionHero>
         <SectionMentoring></SectionMentoring>
         <SectionUnderstandMethod></SectionUnderstandMethod>
+        <SectionCronograma></SectionCronograma>
         {/* <footer className='absolute bottom-2 text-gray-700'>
             © {new Date().getFullYear()} By{' '}
             <UnderlineLink href='https://github.com/1devjr' target='_blank'>

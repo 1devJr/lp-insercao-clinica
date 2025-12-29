@@ -6,12 +6,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/images/Background\ Image.png');
+  color: #fff;
+  /* ORIGINAL   */
+  /* background-image: url('/images/Background\ Image.png');
   background-blend-mode: multiply;
   background-color: rgba(0, 0, 0, 0.4);
-  /* coloque o nome correto do arquivo */
-  color: #fff;
-  background-size: cover;
   background-position: center;
-  position: relative;
+  background-size: cover;
+  position: relative; */
+  /* coloque o nome correto do arquivo */
+
+  /* #C67A5B com 40% */
+  background-image: url('/images/Background Image.png');
+  background-color: rgba(198, 122, 91, 0.4);
+  background-blend-mode: multiply;
+
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

@@ -13,7 +13,7 @@ export default function SectionHero() {
     <>
       <section className='section-hero relative'>
         <div className='container mx-auto flex flex-col items-start justify-start h-screen relative'>
-          <h1 className='title text-7xl font-normal absolute max-w-4xl bottom-80'>
+          <h1 className='title text-7xl font-serif font-normal absolute max-w-4xl bottom-80'>
             Projeto Inserção na clínica psicológica
           </h1>
           <span className='description absolute text-xl  bottom-56 max-w-2xl'>
