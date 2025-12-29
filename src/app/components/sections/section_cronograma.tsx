@@ -200,7 +200,9 @@ const TimelineItem = ({
                 <p
                   className={`text-xs italic leading-relaxed transition-colors duration-700 ${
                     isVisible
-                      ? isDark
+                      ? isBonus
+                        ? 'text-[#2a2928]'
+                        : isDark
                         ? 'text-[#C67A5B]'
                         : 'text-[#C67A5B]'
                       : 'text-[#3c3b39]/50'
