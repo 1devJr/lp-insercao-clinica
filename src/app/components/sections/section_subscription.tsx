@@ -1,8 +1,8 @@
 'use client';
 
 import { Send } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useEffect, useState } from 'react';
+import { useFormStatus } from 'react-dom';
 
 import { cn } from '@/lib/utils';
 import {
@@ -54,7 +54,7 @@ function SubmitButton() {
 }
 
 export default function SectionSubscription() {
-  const [state, formAction] = useFormState(submitInterestForm, initialState);
+  const [state, formAction] = useActionState(submitInterestForm, initialState);
 
   // Estados locais para controlar o formulário
   const [availability, setAvailability] = useState<
