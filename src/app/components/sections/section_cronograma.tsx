@@ -160,7 +160,7 @@ const TimelineItem = ({
     <div
       ref={itemRef}
       className={`flex items-start gap-4 ${
-        posicao === 'direita' ? 'flex-row-reverse text-right' : ''
+        posicao === 'direita' ? 'flex-row-reverse' : ''
       }`}
     >
       <div
@@ -307,6 +307,54 @@ export default function SectionCronograma() {
     new Array(encontros.length).fill(false)
   );
 
+  // Ref para o container da timeline
+  const timelineContainerRef = useRef<HTMLDivElement>(null);
+
+  // Refs para cada item da timeline (para calcular posição da linha)
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Estado para a altura da linha de progresso mobile
+  const [mobileProgressHeight, setMobileProgressHeight] = useState(0);
+
+  // Estado para a altura total da linha de fundo (até a última bolinha)
+  const [mobileBackgroundLineHeight, setMobileBackgroundLineHeight] =
+    useState(0);
+
+  // Calcula a altura da linha de progresso baseado nos itens visíveis
+  useEffect(() => {
+    const lastVisibleIndex = visibleItems.lastIndexOf(true);
+    if (lastVisibleIndex === -1 || !timelineContainerRef.current) {
+      setMobileProgressHeight(0);
+      return;
+    }
+
+    const lastVisibleItem = itemRefs.current[lastVisibleIndex];
+
+    if (lastVisibleItem) {
+      // Usa offsetTop para posição relativa ao container pai
+      // Soma top-6 (24px) + metade da bolinha (8px) para alinhar no centro
+      const height = lastVisibleItem.offsetTop + 32; // 24px + 8px = centro da bolinha
+      setMobileProgressHeight(Math.max(0, height));
+    }
+  }, [visibleItems]);
+
+  // Calcula a altura total da linha de fundo (até a última bolinha)
+  // Recalcula sempre que a visibilidade mudar (pois os cards expandem/contraem)
+  useEffect(() => {
+    const updateBackgroundHeight = () => {
+      const lastItem = itemRefs.current[encontros.length - 1];
+      if (lastItem) {
+        // Alinha a linha de fundo ao centro da última bolinha
+        const height = lastItem.offsetTop + 32; // 24px + 8px
+        setMobileBackgroundLineHeight(height);
+      }
+    };
+
+    // Pequeno delay para garantir que os refs e layout estejam atualizados
+    const timer = setTimeout(updateBackgroundHeight, 150);
+    return () => clearTimeout(timer);
+  }, [visibleItems]); // Recalcula quando a visibilidade mudar
+
   const handleVisibilityChange = (index: number, isVisible: boolean) => {
     setVisibleItems((prev) => {
       const newState = [...prev];
@@ -333,111 +381,170 @@ export default function SectionCronograma() {
       </div>
 
       {/* Timeline */}
-      <div className='max-w-5xl mx-auto relative'>
-        <div className='flex flex-col gap-12'>
-          {encontros.map((encontro, index) => {
-            const posicao = index % 2 === 0 ? 'esquerda' : 'direita';
-            const isItemVisible = visibleItems[index];
+      {(() => {
+        const isLastVisible = visibleItems[encontros.length - 1];
+        const backgroundHeight = isLastVisible
+          ? mobileProgressHeight
+          : mobileBackgroundLineHeight > 0
+          ? mobileBackgroundLineHeight
+          : undefined;
+        const progressHeight = backgroundHeight
+          ? Math.min(mobileProgressHeight, backgroundHeight)
+          : mobileProgressHeight;
 
-            // Cor da linha de conexão muda baseado na visibilidade
-            const lineColor = isItemVisible ? 'bg-[#2a2928]' : 'bg-[#fcf8f0]';
+        return (
+          <div
+            className='max-w-5xl mx-auto relative'
+            ref={timelineContainerRef}
+          >
+            {/* Linha de fundo mobile (cinza claro) - termina na última bolinha ou junto ao progresso final */}
+            <div
+              className='md:hidden absolute left-6 top-0 w-0.5 bg-[#fcf8f0]/30 -translate-x-1/2 translate-x-[2px] translate-y-[1px]'
+              style={{
+                height: backgroundHeight ? `${backgroundHeight}px` : '100%',
+              }}
+            />
+            <div
+              className='md:hidden absolute left-6 w-0.5 bg-[#C67A5B] transition-all duration-500 ease-out -translate-x-1/2 translate-x-[2px] translate-y-[1px]'
+              style={{
+                top: 0,
+                height: `${progressHeight}px`,
+              }}
+            />
 
-            // Cor da bolinha muda baseado na visibilidade
-            const dotBgColor = isItemVisible ? 'bg-[#2a2928]' : 'bg-[#fcf8f0]';
-            const dotBorderColor = isItemVisible
-              ? 'border-[#fcf8f0]'
-              : 'border-[#3c3b39]';
+            <div className='flex flex-col gap-8 md:gap-12 md:pl-0'>
+              {encontros.map((encontro, index) => {
+                const posicao = index % 2 === 0 ? 'esquerda' : 'direita';
+                const isItemVisible = visibleItems[index];
 
-            // Cor do segmento vertical da timeline (entre este item e o próximo)
-            const verticalLineColor = isItemVisible
-              ? 'bg-[#2a2928]'
-              : 'bg-[#fcf8f0]/30';
+                // Cor da linha de conexão muda baseado na visibilidade
+                const lineColor = isItemVisible
+                  ? 'bg-[#2a2928]'
+                  : 'bg-[#fcf8f0]';
 
-            return (
-              <div key={index} className='relative flex items-center'>
-                {/* Segmento vertical da linha central - conecta ao item anterior */}
-                {index > 0 && (
+                // Cor da bolinha muda baseado na visibilidade
+                const dotBgColor = isItemVisible
+                  ? 'bg-[#C67A5B]'
+                  : 'bg-[#fcf8f0]';
+                const dotBorderColor = isItemVisible
+                  ? 'border-[#fcf8f0]'
+                  : 'border-[#3c3b39]';
+
+                // Cor do segmento vertical da timeline (entre este item e o próximo)
+                const verticalLineColor = isItemVisible
+                  ? 'bg-[#2a2928]'
+                  : 'bg-[#fcf8f0]/30';
+
+                return (
                   <div
-                    className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 transition-colors duration-700 ${
-                      visibleItems[index - 1]
-                        ? 'bg-[#2a2928]'
-                        : 'bg-[#fcf8f0]/30'
-                    }`}
-                    style={{
-                      top: '-48px',
-                      height: '48px',
+                    key={index}
+                    className='relative flex items-start md:items-center'
+                    ref={(el) => {
+                      itemRefs.current[index] = el;
                     }}
-                  />
-                )}
-
-                {/* Segmento vertical da linha central - conecta ao próximo item */}
-                {index < encontros.length - 1 && (
-                  <div
-                    className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 transition-colors duration-700 ${verticalLineColor}`}
-                    style={{
-                      top: '50%',
-                      height: 'calc(100% + 48px)',
-                    }}
-                  />
-                )}
-
-                {/* Card lado esquerdo */}
-                {posicao === 'esquerda' && (
-                  <>
-                    <div className='w-full md:w-[calc(50%-40px)] md:pr-4'>
-                      <TimelineItem
-                        numero={encontro.numero}
-                        titulo={encontro.titulo}
-                        descricao={encontro.descricao}
-                        destaque={encontro.destaque}
-                        posicao={posicao}
-                        isDark={encontro.isDark}
-                        isBonus={encontro.isBonus}
-                        onVisibilityChange={(isVisible) =>
-                          handleVisibilityChange(index, isVisible)
-                        }
-                      />
-                    </div>
-                    {/* Linha de conexão horizontal - esquerda para centro */}
+                  >
+                    {/* Mobile: Bolinha na timeline */}
                     <div
-                      className={`hidden md:block absolute right-1/2 top-1/2 -translate-y-1/2 w-10 h-0.5 transition-colors duration-700 ${lineColor}`}
+                      className={`md:hidden absolute left-6 top-6 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 z-10 transition-all duration-500 ${dotBgColor} ${dotBorderColor}`}
                     />
-                  </>
-                )}
 
-                {/* Ponto na timeline (desktop) */}
-                <div
-                  className={`hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full border-4 z-10 transition-all duration-700 ${dotBgColor} ${dotBorderColor}`}
-                />
-
-                {/* Card lado direito */}
-                {posicao === 'direita' && (
-                  <>
-                    {/* Linha de conexão horizontal - centro para direita */}
+                    {/* Mobile: Linha horizontal conectando bolinha ao card */}
                     <div
-                      className={`hidden md:block absolute left-1/2 top-1/2 -translate-y-1/2 w-10 h-0.5 transition-colors duration-700 ${lineColor}`}
+                      className={`md:hidden absolute left-8 top-6 h-0.5 transition-all duration-300 ease-out ${
+                        isItemVisible ? 'bg-[#C67A5B]' : 'bg-[#fcf8f0]/50'
+                      }`}
+                      style={{
+                        top: '1.85rem',
+                        width: '16px',
+                        transform: 'translateY(-50%)',
+                      }}
                     />
-                    <div className='w-full md:w-[calc(50%-40px)] md:ml-auto md:pl-4'>
-                      <TimelineItem
-                        numero={encontro.numero}
-                        titulo={encontro.titulo}
-                        descricao={encontro.descricao}
-                        destaque={encontro.destaque}
-                        posicao={posicao}
-                        isDark={encontro.isDark}
-                        isBonus={encontro.isBonus}
-                        onVisibilityChange={(isVisible) =>
-                          handleVisibilityChange(index, isVisible)
-                        }
+
+                    {/* Segmento vertical da linha central - conecta ao item anterior */}
+                    {index > 0 && (
+                      <div
+                        className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 transition-colors duration-700 ${
+                          visibleItems[index - 1]
+                            ? 'bg-[#2a2928]'
+                            : 'bg-[#fcf8f0]/30'
+                        }`}
+                        style={{
+                          top: '-48px',
+                          height: '48px',
+                        }}
                       />
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+                    )}
+
+                    {/* Segmento vertical da linha central - conecta ao próximo item */}
+                    {index < encontros.length - 1 && (
+                      <div
+                        className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 transition-colors duration-700 ${verticalLineColor}`}
+                        style={{
+                          top: '50%',
+                          height: 'calc(100% + 48px)',
+                        }}
+                      />
+                    )}
+
+                    {/* Card lado esquerdo */}
+                    {posicao === 'esquerda' && (
+                      <>
+                        <div className='w-full pl-12 md:pl-0 md:w-[calc(50%-40px)] md:pr-4'>
+                          <TimelineItem
+                            numero={encontro.numero}
+                            titulo={encontro.titulo}
+                            descricao={encontro.descricao}
+                            destaque={encontro.destaque}
+                            posicao={posicao}
+                            isDark={encontro.isDark}
+                            isBonus={encontro.isBonus}
+                            onVisibilityChange={(isVisible) =>
+                              handleVisibilityChange(index, isVisible)
+                            }
+                          />
+                        </div>
+                        {/* Linha de conexão horizontal - esquerda para centro */}
+                        <div
+                          className={`hidden md:block absolute right-1/2 top-1/2 -translate-y-1/2 w-10 h-0.5 transition-colors duration-700 ${lineColor}`}
+                        />
+                      </>
+                    )}
+
+                    {/* Ponto na timeline (desktop) */}
+                    <div
+                      className={`hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-5 h-5 rounded-full border-4 z-10 transition-all duration-700 ${dotBgColor} ${dotBorderColor}`}
+                    />
+
+                    {/* Card lado direito */}
+                    {posicao === 'direita' && (
+                      <>
+                        {/* Linha de conexão horizontal - centro para direita */}
+                        <div
+                          className={`hidden md:block absolute left-1/2 top-1/2 -translate-y-1/2 w-10 h-0.5 transition-colors duration-700 ${lineColor}`}
+                        />
+                        <div className='w-full pl-12 md:pl-4 md:w-[calc(50%-40px)] md:ml-auto'>
+                          <TimelineItem
+                            numero={encontro.numero}
+                            titulo={encontro.titulo}
+                            descricao={encontro.descricao}
+                            destaque={encontro.destaque}
+                            posicao={posicao}
+                            isDark={encontro.isDark}
+                            isBonus={encontro.isBonus}
+                            onVisibilityChange={(isVisible) =>
+                              handleVisibilityChange(index, isVisible)
+                            }
+                          />
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
     </section>
   );
 }

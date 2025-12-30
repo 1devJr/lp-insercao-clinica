@@ -11,22 +11,22 @@ interface MentoringItemProps {
 
 const MentoringItem = ({ image, text, index }: MentoringItemProps) => (
   <div
-    className={`flex flex-col justify-center items-center gap-12  ${
+    className={`flex flex-col-reverse justify-center items-center gap-6 md:gap-12 ${
       index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-    }  items-center   w-full`}
+    } items-center w-full`}
   >
     <div className='md:w-4/5 w-full text-justify text-black text-lg'>
-      <p className='text-justify w-full text-xl md:text-2xl leading-relaxed'>
+      <p className='text-justify w-full text-lg md:text-2xl leading-relaxed'>
         {text}
       </p>
     </div>
-    <div className='md:w-1/5 w-full flex items-center justify-center md:justify-normal md:items-start mt-4 md:mt-0'>
+    <div className='md:w-1/5 w-full flex items-center justify-center md:justify-normal md:items-start'>
       <Image
         src={image}
         alt='Mentoring Icon'
-        width={80}
-        height={80}
-        className='w-auto h-auto md:ml-4 md:mt-0'
+        width={96}
+        height={96}
+        className='w-20 h-20 md:w-auto md:h-auto md:ml-4'
       />
     </div>
   </div>

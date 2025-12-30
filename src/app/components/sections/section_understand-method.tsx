@@ -20,6 +20,13 @@ const MethodItem = ({ image, text, backContent }: MentoringItemProps) => {
       width='100%'
       front={
         <div className='flex h-full w-full flex-col items-center justify-center gap-4 text-center bg-transparent rounded-2xl p-6'>
+          <span className='text-lg font-semibold w-full px-4 text-[#0B0F12]'>
+            {text}
+          </span>
+        </div>
+      }
+      back={
+        <div className='flex h-full w-full flex-col items-center justify-center gap-4 text-center bg-transparent rounded-2xl p-6'>
           <div className='w-16 h-16 flex items-center justify-center'>
             <Image
               src={image}
@@ -33,20 +40,6 @@ const MethodItem = ({ image, text, backContent }: MentoringItemProps) => {
               }}
             />
           </div>
-          <span className='text-lg font-semibold w-full px-4 text-[#0B0F12]'>
-            {text}
-          </span>
-          {/* Texto diferente para mobile vs desktop */}
-          <span className='text-sm text-[#0B0F12]/60 px-6 hidden md:block'>
-            Passe o mouse para virar
-          </span>
-          <span className='text-sm text-[#0B0F12]/60 px-6 md:hidden'>
-            Role para ver mais
-          </span>
-        </div>
-      }
-      back={
-        <div className='flex h-full w-full flex-col items-center justify-center gap-4 text-center bg-transparent rounded-2xl p-6'>
           <span className='text-lg font-semibold text-[#0B0F12]'>
             Mais detalhes
           </span>

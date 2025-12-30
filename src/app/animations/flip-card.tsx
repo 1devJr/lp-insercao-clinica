@@ -103,6 +103,14 @@ const FlipCard: React.FC<FlipCardProps> = ({
     onHover?.(false);
   };
 
+  // Handler para click/tap no mobile
+  const handleClick = () => {
+    if (!isTouchDevice) return;
+    setIsFlipped((prev) => !prev);
+    setSpotlightOpacity((prev) => (prev === 0 ? 0.6 : 0));
+    onHover?.(!isFlipped);
+  };
+
   const handleFocus = () => {
     if (isTouchDevice) return;
     setIsFlipped(true);
@@ -126,10 +134,11 @@ const FlipCard: React.FC<FlipCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       onFocus={handleFocus}
       onBlur={handleBlur}
       tabIndex={isTouchDevice ? undefined : 0}
-      className={`flip-card-container outline-none ${className}`}
+      className={`flip-card-container outline-none cursor-pointer ${className}`}
       style={{
         width: widthStyle,
         height: heightStyle,
