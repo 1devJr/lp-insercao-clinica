@@ -5,9 +5,13 @@ import {
   interestFormSchema,
 } from '@/lib/validations/interestForm';
 
-// URL mockada do backend - será substituída pela URL real
-const BACKEND_URL =
-  process.env.INTEREST_FORM_API_URL || 'https://api.mock.example.com/interest';
+const FALLBACK_SITE_URL = 'http://localhost:3000';
+
+const siteUrl = (() => {
+  const urlFromEnv = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL;
+  if (!urlFromEnv) return FALLBACK_SITE_URL;
+  return urlFromEnv.startsWith('http') ? urlFromEnv : `https://${urlFromEnv}`;
+})();
 
 export type FormState = {
   success: boolean;
@@ -61,30 +65,26 @@ export async function submitInterestForm(
       };
     }
 
-    // Envia para o backend (mockado)
-    const response = await fetch(BACKEND_URL, {
+    // Envia para o handler interno que aciona o n8n
+    const response = await fetch(`${siteUrl}/api/lead`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(validationResult.data),
+      body: JSON.stringify({
+        name: validationResult.data.fullName,
+        phone: validationResult.data.phone,
+        email: validationResult.data.email,
+        source: 'subscription-form',
+        message: `${validationResult.data.participantType} | ${validationResult.data.tccExperience} | ${validationResult.data.mentoringInterest}`,
+      }),
     });
 
-    // Mock: Como o endpoint é fictício, vamos simular sucesso
-    // Em produção, verificar response.ok
-    if (!response.ok && BACKEND_URL.includes('mock.example.com')) {
-      // Simula sucesso para o mock
-      // eslint-disable-next-line no-console
-      console.log('[MOCK] Dados recebidos:', validationResult.data);
-
-      return {
-        success: true,
-        message: 'Obrigado pelo seu interesse! Em breve entraremos em contato.',
-      };
-    }
-
     if (!response.ok) {
-      throw new Error(`Erro ao enviar formulário: ${response.statusText}`);
+      const errJson = await response.json().catch(() => null);
+      const errorMessage =
+        errJson?.error || response.statusText || 'Erro ao enviar';
+      throw new Error(errorMessage);
     }
 
     return {
@@ -94,15 +94,6 @@ export async function submitInterestForm(
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Erro ao processar formulário:', error);
-
-    // Mock: Se falhar por ser URL inexistente, simula sucesso
-    if (BACKEND_URL.includes('mock.example.com')) {
-      return {
-        success: true,
-        message:
-          '[MOCK] Obrigado pelo seu interesse! Em breve entraremos em contato.',
-      };
-    }
 
     return {
       success: false,
