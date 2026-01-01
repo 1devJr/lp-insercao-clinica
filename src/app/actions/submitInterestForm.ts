@@ -76,14 +76,22 @@ export async function submitInterestForm(
         phone: validationResult.data.phone,
         email: validationResult.data.email,
         source: 'subscription-form',
+        participantType: validationResult.data.participantType,
+        tccExperience: validationResult.data.tccExperience,
+        mentoringInterest: validationResult.data.mentoringInterest,
+        availability: validationResult.data.availability,
+        acceptTerms: validationResult.data.acceptTerms,
         message: `${validationResult.data.participantType} | ${validationResult.data.tccExperience} | ${validationResult.data.mentoringInterest}`,
       }),
     });
 
     if (!response.ok) {
       const errJson = await response.json().catch(() => null);
+      const upstreamMessage = errJson?.error || response.statusText;
       const errorMessage =
-        errJson?.error || response.statusText || 'Erro ao enviar';
+        response.status === 401
+          ? 'Unauthorized'
+          : upstreamMessage || 'Erro ao enviar';
       throw new Error(errorMessage);
     }
 
@@ -94,6 +102,14 @@ export async function submitInterestForm(
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Erro ao processar formulário:', error);
+
+    if (error instanceof Error && error.message === 'Unauthorized') {
+      return {
+        success: false,
+        message:
+          'Não foi possível registrar seu interesse. Estamos com instabilidade em nossos sistemas, por favor tente mais tarde!',
+      };
+    }
 
     return {
       success: false,

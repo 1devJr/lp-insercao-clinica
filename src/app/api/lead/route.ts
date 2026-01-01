@@ -6,6 +6,11 @@ interface LeadPayload {
   email?: string;
   source?: string;
   message?: string;
+  participantType?: string;
+  tccExperience?: string;
+  mentoringInterest?: string;
+  availability?: unknown;
+  acceptTerms?: boolean;
   timestamp?: string;
 }
 
@@ -41,6 +46,24 @@ function sanitizePayload(data: unknown): LeadPayload | null {
     message: isValidString(record.message, 500)
       ? String(record.message).trim()
       : undefined,
+    participantType: isValidString(record.participantType, 120)
+      ? String(record.participantType).trim()
+      : undefined,
+    tccExperience: isValidString(record.tccExperience, 1000)
+      ? String(record.tccExperience).trim()
+      : undefined,
+    mentoringInterest: isValidString(record.mentoringInterest, 1000)
+      ? String(record.mentoringInterest).trim()
+      : undefined,
+    availability: record.availability,
+    acceptTerms:
+      typeof record.acceptTerms === 'boolean'
+        ? record.acceptTerms
+        : record.acceptTerms === 'true'
+        ? true
+        : record.acceptTerms === 'false'
+        ? false
+        : undefined,
     timestamp: new Date().toISOString(),
   };
 
