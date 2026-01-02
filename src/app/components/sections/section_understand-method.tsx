@@ -10,7 +10,7 @@ import FlipCard from '@/app/animations/flip-card';
 interface MentoringItemProps {
   image: string;
   text: string;
-  backContent: string;
+  backContent: string | React.ReactNode;
   index: number;
 }
 
@@ -31,8 +31,8 @@ const MethodItem = ({
       borderColor='#3b2a24'
       borderWidth={1}
       front={
-        <div className='flex h-full w-full flex-col items-start justify-between gap-2 text-left rounded-2xl p-5 md:p-6'>
-          <div className='flex items-center gap-2 text-[#234A57] font-semibold tracking-tight'>
+        <div className='flex h-full w-full flex-col items-center justify-between gap-2 text-center rounded-2xl p-5 md:p-6'>
+          <div className='flex items-center gap-2 text-[#234A57] font-semibold tracking-tight self-start'>
             <span className='text-xs px-2 py-0.5 bg-[#234A57]/10 rounded-full'>
               {numberLabel}
             </span>
@@ -51,20 +51,14 @@ const MethodItem = ({
               }}
             />
           </div>
-          <h3 className='text-lg md:text-xl font-semibold text-[#0B0F12] leading-tight'>
+          <h3 className='text-lg md:text-xl font-semibold text-[#0B0F12] leading-tight text-center'>
             {text}
           </h3>
         </div>
       }
       back={
-        <div className='flex h-full w-full flex-col items-start justify-between gap-2 text-left rounded-2xl p-5 md:p-6'>
-          <div className='flex items-center gap-2 text-[#234A57] font-semibold tracking-tight'>
-            <span className='text-xs px-2 py-0.5 bg-[#234A57]/10 rounded-full'>
-              {numberLabel}
-            </span>
-            <span className='text-sm uppercase'>Detalhe</span>
-          </div>
-          <p className='text-sm md:text-base leading-relaxed text-[#0B0F12]/80'>
+        <div className='flex h-full w-full flex-col items-start justify-center gap-2 text-left rounded-2xl p-5 md:p-6'>
+          <p className='text-sm md:text-base leading-relaxed text-[#0B0F12]/80 whitespace-pre-line'>
             {backContent}
           </p>
         </div>
@@ -81,35 +75,123 @@ export default function SectionUnderstandMethod() {
   const mentoringItems = [
     {
       image: '/images/MetodoIcon1.svg',
-      text: 'Capacitação básica em TCC e Contextuais',
-      backContent:
-        'Aprenda os fundamentos da Terapia Cognitivo-Comportamental e abordagens contextuais para aplicar na prática clínica com segurança.',
+      text: 'Capacitação teórico-prática em Terapia cognitivo-comportamental e Terapia do Esquema',
+      backContent: (
+        <>
+          Aulas <strong>teórico-práticas</strong> com tudo que você precisa
+          saber sobre a aplicação da TCC e Terapia do Esquema na prática do
+          consultório.
+          <br />
+          <br />
+          Conceitualização de casos; Estrutura de sessão; Construção de
+          raciocínio clínico; Técnicas e muito mais...
+        </>
+      ),
     },
     {
       image: '/images/MetodoIcon2.svg',
-      text: 'Aprendizado do processo administrativo de um consultório',
-      backContent:
-        'Domine a gestão do seu consultório: agendamentos, prontuários, contratos e tudo que você precisa para uma clínica organizada.',
-    },
-    {
-      image: '/images/MetodoIcon3.svg',
-      text: 'Acompanhamento e suporte com profissional experiente',
-      backContent:
-        'Tenha supervisão individualizada com psicólogos experientes para tirar dúvidas e desenvolver suas habilidades clínicas.',
+      text: 'Aprendizado do processo administrativo e gestão do consultório',
+      backContent: (
+        <>
+          Aulas sobre <strong>processos administrativos</strong> de um
+          consultório de sucesso.
+          <br />
+          <br />
+          Contato inicial, agendamento e desmarcações, confecção de prontuário,
+          cobrança e gerenciamento financeiro.
+        </>
+      ),
     },
     {
       image: '/images/MetodoIcon4.svg',
       text: 'Acompanhamento e suporte com profissional experiente',
-      backContent:
-        'Receba feedback contínuo sobre seus atendimentos e evolua com orientações personalizadas para cada caso.',
+      backContent: (
+        <>
+          <strong>Supervisão</strong> dos seus atendimentos e troca clínica com
+          outros colegas, permitindo contato com diferentes casos e demandas,
+          sempre com a segurança e a orientação de uma profissional com mais de{' '}
+          <strong>10 anos </strong>de experiência clínica.
+        </>
+      ),
+    },
+    {
+      image: '/images/MetodoIcon3.svg',
+      text: 'Oportunidade de suporte contínuo, acompanhamento próximo e formação de networking',
+      backContent: (
+        <>
+          Suporte constante por meio de grupo exclusivo no WhatsApp, com relação
+          próxima com a mentora e acesso à equipe administrativa. Oportunidade
+          de <strong>esclarecer suas dúvidas</strong> entre os encontros,
+          realizar <strong>trocas de materiais</strong> complementares e
+          fortalecer o <strong>networking</strong> com outros mentorandos.
+        </>
+      ),
     },
     {
       image: '/images/MetodoIcon5.svg',
-      text: 'Acompanhamento e suporte com profissional experiente',
-      backContent:
-        'Participe de grupos de discussão de casos e amplie sua visão clínica com diferentes perspectivas.',
+      text: 'Ingresso no mercado clínico com segurança',
+      backContent: (
+        <>
+          <strong>Indicação de pacientes</strong> para iniciar sua base de
+          clientes e realizar experiências prática no atendimento clínico.
+          <br />
+          <br />
+          Destacando-se terá a oportunidade de ser <strong>
+            selecionado
+          </strong>{' '}
+          para se tornar membro da nossa equipe.
+        </>
+      ),
     },
   ];
+
+  // Função para navegar pelos cards
+  const navigateCarousel = (direction: 'prev' | 'next') => {
+    // Se estiver no último card e clicar em next, scroll para próxima seção
+    if (direction === 'next' && activeIndex === mentoringItems.length - 1) {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      // Encontra a próxima seção após esta
+      const nextSection = section.nextElementSibling as HTMLElement;
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        // Se não houver próxima seção, scroll para o fim desta seção
+        window.scrollTo({
+          top: section.offsetTop + section.offsetHeight,
+          behavior: 'smooth',
+        });
+      }
+      return;
+    }
+
+    const newIndex =
+      direction === 'next'
+        ? Math.min(activeIndex + 1, mentoringItems.length - 1)
+        : Math.max(activeIndex - 1, 0);
+
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const viewportHeight = window.innerHeight;
+    const startOffset = viewportHeight * 0.35;
+    const endOffset = viewportHeight * 0.2;
+
+    const startScroll = section.offsetTop - startOffset;
+    const endScroll =
+      section.offsetTop + section.offsetHeight - viewportHeight + endOffset;
+    const totalScroll = endScroll - startScroll;
+
+    // Calcula a posição do scroll para o novo índice
+    const targetProgress = newIndex / (mentoringItems.length - 1);
+    const targetScrollY = startScroll + targetProgress * totalScroll;
+
+    window.scrollTo({
+      top: targetScrollY,
+      behavior: 'smooth',
+    });
+  };
 
   // Scroll vertical controla o deslocamento horizontal do carrossel.
   useEffect(() => {
@@ -246,6 +328,79 @@ export default function SectionUnderstandMethod() {
               </div>
             </div>
           </div>
+
+          {/* Botões de navegação */}
+          <button
+            onClick={() => navigateCarousel('prev')}
+            className={`absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full transition-all duration-300 ${
+              activeIndex === 0
+                ? 'opacity-20 cursor-not-allowed'
+                : 'opacity-40 hover:opacity-70 hover:bg-[#0B0F12]/10'
+            }`}
+            disabled={activeIndex === 0}
+            aria-label='Card anterior'
+          >
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={2}
+              stroke='currentColor'
+              className='w-8 h-8 md:w-10 md:h-10 text-[#0B0F12]'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M15.75 19.5L8.25 12l7.5-7.5'
+              />
+            </svg>
+          </button>
+
+          <button
+            onClick={() => navigateCarousel('next')}
+            className={`absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full transition-all duration-300 ${
+              activeIndex === mentoringItems.length - 1
+                ? 'opacity-40 hover:opacity-70 hover:bg-[#0B0F12]/10'
+                : 'opacity-40 hover:opacity-70 hover:bg-[#0B0F12]/10'
+            }`}
+            aria-label={
+              activeIndex === mentoringItems.length - 1
+                ? 'Próxima seção'
+                : 'Próximo card'
+            }
+          >
+            {activeIndex === mentoringItems.length - 1 ? (
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={2}
+                stroke='currentColor'
+                className='w-8 h-8 md:w-10 md:h-10 text-[#0B0F12]'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M19.5 5.25l-7.5 7.5-7.5-7.5m15 6l-7.5 7.5-7.5-7.5'
+                />
+              </svg>
+            ) : (
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={2}
+                stroke='currentColor'
+                className='w-8 h-8 md:w-10 md:h-10 text-[#0B0F12]'
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M8.25 4.5l7.5 7.5-7.5 7.5'
+                />
+              </svg>
+            )}
+          </button>
         </div>
       </div>
     </>
