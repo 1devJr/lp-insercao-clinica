@@ -27,7 +27,9 @@ export default function HomePage() {
   return (
     <main>
       <Head>
-        <title>Hi</title>
+        <title>
+          Clinica Menote - Saúde mental com afeto, vínculo e excelência.
+        </title>
       </Head>
       <section className='bg-white'>
         <SectionHero></SectionHero>

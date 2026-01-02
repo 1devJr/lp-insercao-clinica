@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from 'next';
 import Image from 'next/image';
 
@@ -39,6 +41,28 @@ export const metadata: Metadata = {
 };
 
 export default function SectionMentoring() {
+  const scrollToForm = () => {
+    const formSection = document.getElementById('subscription-form');
+    if (formSection) {
+      // Calcula posição final após layout estabilizar
+      const scrollToTarget = () => {
+        const rect = formSection.getBoundingClientRect();
+        const absoluteTop = window.scrollY + rect.top;
+        window.scrollTo({
+          top: absoluteTop,
+          behavior: 'smooth',
+        });
+      };
+
+      // Scroll inicial
+      scrollToTarget();
+
+      // Re-scroll após expansões do cronograma
+      setTimeout(scrollToTarget, 600);
+      setTimeout(scrollToTarget, 1200);
+    }
+  };
+
   const mentoringItems = [
     {
       image: '/images/MentoriaIcon1.svg',
@@ -89,6 +113,27 @@ export default function SectionMentoring() {
               />
             </AnimatedContent>
           ))}
+
+          {/* CTA Button */}
+          <AnimatedContent
+            distance={50}
+            direction='vertical'
+            reverse={false}
+            duration={0.6}
+            ease='power3.out'
+            initialOpacity={0}
+            animateOpacity
+            scale={1}
+            threshold={0.1}
+            delay={0.2}
+          >
+            <button
+              onClick={scrollToForm}
+              className='mt-8 px-8 py-4 bg-[#C67A5B] hover:bg-[#b06a4d] text-white text-lg md:text-xl font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105'
+            >
+              Quero me inscrever agora
+            </button>
+          </AnimatedContent>
         </div>
       </div>
     </>

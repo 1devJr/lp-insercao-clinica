@@ -1,7 +1,7 @@
 export const siteConfig = {
-  title: 'Next.js + Tailwind CSS + TypeScript Starter',
+  title: 'Clinica Menote - Saúde mental com afeto, vínculo e excelência.',
   description:
-    'A starter for Next.js, Tailwind CSS, and TypeScript with Absolute Import, Seo, Link component, pre-configured with Husky',
+    'Clínica Menote: cuidado integral em saúde mental com psicoterapia individual, de casal e apoio especializado para TCC.',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
-  url: 'https://tsnext-tw.thcl.dev',
+  url: 'https://clinicamenote.com.br',
 };

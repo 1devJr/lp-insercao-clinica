@@ -178,7 +178,10 @@ export default function SectionSubscription() {
   }
 
   return (
-    <section className='bg-[#FCF8F0] relative py-20 px-4'>
+    <section
+      id='subscription-form'
+      className='bg-[#FCF8F0] relative py-20 px-4 scroll-mt-8'
+    >
       {/* Header */}
       <div className='max-w-4xl mx-auto text-center mb-12'>
         <h2 className="font-['Kurale',serif] text-5xl md:text-7xl text-[#3c3b39] mb-4 tracking-tight">

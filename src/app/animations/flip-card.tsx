@@ -16,6 +16,12 @@ interface FlipCardProps {
   className?: string;
   /** Cor do efeito spotlight (opcional) */
   spotlightColor?: `rgba(${number}, ${number}, ${number}, ${number})`;
+  /** Cor de fundo do card */
+  backgroundColor?: string;
+  /** Cor da borda do card */
+  borderColor?: string;
+  /** Espessura da borda do card */
+  borderWidth?: number;
   /** Callback quando hover muda */
   onHover?: (isHovered: boolean) => void;
   /** Altura do card */
@@ -29,6 +35,9 @@ const FlipCard: React.FC<FlipCardProps> = ({
   back,
   className = '',
   spotlightColor = 'rgba(255, 255, 255, 0.25)',
+  backgroundColor = '#FCF8F0',
+  borderColor = '#2f261f',
+  borderWidth = 1,
   onHover,
   height = 320,
   width = '100%',
@@ -60,12 +69,19 @@ const FlipCard: React.FC<FlipCardProps> = ({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Flip quando o card está visível no centro da tela
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+          if (!containerRef.current) return;
+
+          const rect = containerRef.current.getBoundingClientRect();
+          const screenWidth = window.innerWidth;
+          const leftEdgePercent = rect.left / screenWidth;
+
+          // Flip quando a borda esquerda do card está a ~20% da borda esquerda da tela
+          if (entry.isIntersecting && leftEdgePercent <= 0.2) {
             setIsFlipped(true);
             setSpotlightOpacity(0.6);
             onHover?.(true);
-          } else {
+          } else if (leftEdgePercent > 0.15) {
+            // Desvira quando a borda esquerda está a mais de 15% da tela
             setIsFlipped(false);
             setSpotlightOpacity(0);
             onHover?.(false);
@@ -73,8 +89,8 @@ const FlipCard: React.FC<FlipCardProps> = ({
         });
       },
       {
-        threshold: [0, 0.3, 0.6, 1],
-        rootMargin: '-20% 0px -20% 0px', // Ativa quando está mais centralizado na tela
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        rootMargin: '0px',
       }
     );
 
@@ -103,9 +119,8 @@ const FlipCard: React.FC<FlipCardProps> = ({
     onHover?.(false);
   };
 
-  // Handler para click/tap no mobile
+  // Handler para click/tap - funciona em todos os dispositivos
   const handleClick = () => {
-    if (!isTouchDevice) return;
     setIsFlipped((prev) => !prev);
     setSpotlightOpacity((prev) => (prev === 0 ? 0.6 : 0));
     onHover?.(!isFlipped);
@@ -166,9 +181,10 @@ const FlipCard: React.FC<FlipCardProps> = ({
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             borderRadius: '1.5rem',
-            border: '2px solid #0B0F12',
+            border: `${borderWidth}px solid ${borderColor}`,
             overflow: 'hidden',
-            boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
+            boxShadow: '0 12px 30px rgba(0,0,0,0.08)',
+            backgroundColor,
           }}
         >
           <div className='flex h-full w-full flex-col justify-center items-center p-6'>
@@ -195,9 +211,10 @@ const FlipCard: React.FC<FlipCardProps> = ({
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
             borderRadius: '1.5rem',
-            border: '2px solid #0B0F12',
+            border: `${borderWidth}px solid ${borderColor}`,
             overflow: 'hidden',
-            boxShadow: '0 10px 40px rgba(0,0,0,0.15)',
+            boxShadow: '0 12px 30px rgba(0,0,0,0.08)',
+            backgroundColor,
           }}
         >
           <div className='flex h-full w-full flex-col justify-center items-center p-6'>

@@ -16,6 +16,13 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.title}`,
   },
   description: siteConfig.description,
+  keywords: [
+    'Clínica Menote',
+    'saúde mental',
+    'psicologia',
+    'psicoterapia',
+    'terapia cognitivo-comportamental',
+  ],
   robots: { index: true, follow: true },
   // !STARTERCONF this is the default favicon, you can generate your own from https://realfavicongenerator.net/
   // ! copy to /favicon folder
@@ -23,6 +30,9 @@ export const metadata: Metadata = {
     icon: '/favicon/favicon.ico',
     shortcut: '/favicon/favicon-16x16.png',
     apple: '/favicon/apple-touch-icon.png',
+  },
+  alternates: {
+    canonical: siteConfig.url,
   },
   manifest: `/favicon/site.webmanifest`,
   openGraph: {
@@ -32,7 +42,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.title,
     images: [`${siteConfig.url}/images/og.jpg`],
     type: 'website',
-    locale: 'en_US',
+    locale: 'pt_BR',
   },
   twitter: {
     card: 'summary_large_image',
@@ -55,7 +65,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning>
+    <html lang='pt-BR' suppressHydrationWarning>
       <body suppressHydrationWarning>{children}</body>
     </html>
   );

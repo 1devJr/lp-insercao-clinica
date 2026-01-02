@@ -1,3 +1,5 @@
+'use client';
+
 import { ChevronsDown } from 'lucide-react';
 import { Metadata } from 'next';
 
@@ -9,6 +11,13 @@ export const metadata: Metadata = {
 };
 
 export default function SectionHero() {
+  const scrollToNextSection = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
       <section className='section-hero relative'>
@@ -19,13 +28,16 @@ export default function SectionHero() {
             </h1>
             <span className='description text-base sm:text-lg md:text-xl max-w-2xl'>
               Aprenda de forma prática e imersiva tudo que precisa saber para
-              ingressar na clinica psicológica, na abordagem cognitivo
-              comportamental
+              ingressar na clinica psicológica.
             </span>
           </div>
-          <div className='absolute w-full flex justify-center text-center bottom-10 animate-bounce left-0'>
+          <button
+            onClick={scrollToNextSection}
+            className='absolute w-full flex justify-center text-center bottom-10 animate-bounce left-0 cursor-pointer'
+            aria-label='Scroll para próxima seção'
+          >
             <ChevronsDown className='h-8 w-8 md:h-10 md:w-10' />
-          </div>
+          </button>
         </div>
       </section>
     </>
