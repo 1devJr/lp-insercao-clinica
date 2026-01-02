@@ -1,7 +1,7 @@
 'use client';
 
 import { Send } from 'lucide-react';
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect, useMemo, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { cn } from '@/lib/utils';
@@ -9,6 +9,8 @@ import {
   ParticipantType,
   participantTypeLabels,
 } from '@/lib/validations/interestForm';
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 import { ScheduleSelector } from '@/components/form/ScheduleSelector';
 import { Button } from '@/components/ui/button';
@@ -23,19 +25,22 @@ import {
   submitInterestForm,
 } from '@/app/actions/submitInterestForm';
 
+type ParticipantTypeValue =
+  (typeof ParticipantType)[keyof typeof ParticipantType];
+
 const initialState: FormState = {
   success: false,
   message: '',
 };
 
 // Componente para o botão de submit com estado de pending
-function SubmitButton() {
+function SubmitButton({ disabled }: { disabled: boolean }) {
   const { pending } = useFormStatus();
 
   return (
     <Button
       type='submit'
-      disabled={pending}
+      disabled={pending || disabled}
       className='bg-[#fcf8f0] text-[#1e1e1e] hover:bg-[#f0ece4] px-8 py-3 rounded-lg flex items-center gap-2 transition-all disabled:opacity-50'
     >
       {pending ? (
@@ -57,10 +62,28 @@ export default function SectionSubscription() {
   const [state, formAction] = useActionState(submitInterestForm, initialState);
 
   // Estados locais para controlar o formulário
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [participantType, setParticipantType] = useState<
+    ParticipantTypeValue | ''
+  >('');
+  const [tccExperience, setTccExperience] = useState('');
+  const [mentoringInterest, setMentoringInterest] = useState('');
   const [availability, setAvailability] = useState<
     Array<{ day: string; period: string }>
   >([]);
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [touched, setTouched] = useState({
+    fullName: false,
+    phone: false,
+    email: false,
+    participantType: false,
+    tccExperience: false,
+    mentoringInterest: false,
+    availability: false,
+    acceptTerms: false,
+  });
   const [showSuccess, setShowSuccess] = useState(false);
 
   // Efeito para mostrar mensagem de sucesso
@@ -68,10 +91,67 @@ export default function SectionSubscription() {
     if (state.success) {
       setShowSuccess(true);
       // Reset form após sucesso
+      setFullName('');
+      setPhone('');
+      setEmail('');
+      setParticipantType('');
+      setTccExperience('');
+      setMentoringInterest('');
       setAvailability([]);
       setAcceptTerms(false);
+      setTouched({
+        fullName: false,
+        phone: false,
+        email: false,
+        participantType: false,
+        tccExperience: false,
+        mentoringInterest: false,
+        availability: false,
+        acceptTerms: false,
+      });
     }
   }, [state.success]);
+
+  const formatPhone = (value: string) => {
+    const digits = value.replace(/\D/g, '').slice(0, 11);
+    if (digits.length <= 2) return digits;
+    if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+  };
+
+  const clientErrors = useMemo(() => {
+    const errors: Record<string, string> = {};
+    if (fullName.trim().length < 3) errors.fullName = 'Nome muito curto';
+    const phoneDigits = phone.replace(/\D/g, '');
+    if (phoneDigits.length < 10) errors.phone = 'Telefone inválido';
+    if (!emailRegex.test(email.trim())) errors.email = 'Email inválido';
+    if (
+      participantType !== ParticipantType.STUDENT &&
+      participantType !== ParticipantType.GRADUATED
+    ) {
+      errors.participantType = 'Seleção obrigatória';
+    }
+    if (tccExperience.trim().length < 10)
+      errors.tccExperience = 'Descreva sua experiência (mín. 10 caracteres)';
+    if (mentoringInterest.trim().length < 10)
+      errors.mentoringInterest = 'Descreva seu interesse (mín. 10 caracteres)';
+    if (!availability || availability.length === 0)
+      errors.availability =
+        'Selecione ao menos um horário que esteja disponível';
+    if (!acceptTerms) errors.acceptTerms = 'Aceite os termos para prosseguir';
+    return errors;
+  }, [
+    fullName,
+    phone,
+    email,
+    participantType,
+    tccExperience,
+    mentoringInterest,
+    availability,
+    acceptTerms,
+  ]);
+
+  const isClientInvalid = Object.keys(clientErrors).length > 0;
 
   // Se mostrou sucesso, renderiza mensagem de confirmação
   if (showSuccess) {
@@ -136,9 +216,16 @@ export default function SectionSubscription() {
                 name='fullName'
                 type='text'
                 placeholder='Fulano da Silva Beltrano'
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                onBlur={() =>
+                  setTouched((prev) => ({ ...prev, fullName: true }))
+                }
                 className={cn(
                   'bg-white border-[#79747e] text-[#1e1e1e] placeholder:text-gray-400',
-                  state.errors?.fullName && 'border-red-400'
+                  (state.errors?.fullName ||
+                    (touched.fullName && clientErrors.fullName)) &&
+                    'border-red-400'
                 )}
               />
               {state.errors?.fullName && (
@@ -146,6 +233,13 @@ export default function SectionSubscription() {
                   {state.errors.fullName[0]}
                 </p>
               )}
+              {!state.errors?.fullName &&
+                touched.fullName &&
+                clientErrors.fullName && (
+                  <p className='text-red-400 text-sm'>
+                    {clientErrors.fullName}
+                  </p>
+                )}
             </div>
 
             <div className='space-y-2'>
@@ -157,13 +251,21 @@ export default function SectionSubscription() {
                 name='phone'
                 type='tel'
                 placeholder='(51) 9 9999 9999'
+                value={phone}
+                onChange={(e) => setPhone(formatPhone(e.target.value))}
+                onBlur={() => setTouched((prev) => ({ ...prev, phone: true }))}
                 className={cn(
                   'bg-white border-[#79747e] text-[#1e1e1e] placeholder:text-gray-400',
-                  state.errors?.phone && 'border-red-400'
+                  (state.errors?.phone ||
+                    (touched.phone && clientErrors.phone)) &&
+                    'border-red-400'
                 )}
               />
               {state.errors?.phone && (
                 <p className='text-red-400 text-sm'>{state.errors.phone[0]}</p>
+              )}
+              {!state.errors?.phone && touched.phone && clientErrors.phone && (
+                <p className='text-red-400 text-sm'>{clientErrors.phone}</p>
               )}
             </div>
           </div>
@@ -179,13 +281,21 @@ export default function SectionSubscription() {
                 name='email'
                 type='email'
                 placeholder='seu@email.com'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
                 className={cn(
                   'bg-white border-[#79747e] text-[#1e1e1e] placeholder:text-gray-400',
-                  state.errors?.email && 'border-red-400'
+                  (state.errors?.email ||
+                    (touched.email && clientErrors.email)) &&
+                    'border-red-400'
                 )}
               />
               {state.errors?.email && (
                 <p className='text-red-400 text-sm'>{state.errors.email[0]}</p>
+              )}
+              {!state.errors?.email && touched.email && clientErrors.email && (
+                <p className='text-red-400 text-sm'>{clientErrors.email}</p>
               )}
             </div>
 
@@ -193,7 +303,14 @@ export default function SectionSubscription() {
               <Label className='text-[#fcf8f0]'>Você é:</Label>
               <RadioGroup
                 name='participantType'
-                defaultValue={ParticipantType.STUDENT}
+                value={participantType}
+                onValueChange={(val) => {
+                  setParticipantType(val as ParticipantTypeValue);
+                  setTouched((prev) => ({ ...prev, participantType: true }));
+                }}
+                onBlur={() =>
+                  setTouched((prev) => ({ ...prev, participantType: true }))
+                }
                 className='flex gap-6 pt-2'
               >
                 <div className='flex items-center space-x-2'>
@@ -228,6 +345,13 @@ export default function SectionSubscription() {
                   {state.errors.participantType[0]}
                 </p>
               )}
+              {!state.errors?.participantType &&
+                touched.participantType &&
+                clientErrors.participantType && (
+                  <p className='text-red-400 text-sm'>
+                    {clientErrors.participantType}
+                  </p>
+                )}
             </div>
           </div>
 
@@ -248,9 +372,16 @@ export default function SectionSubscription() {
               name='tccExperience'
               rows={6}
               placeholder='Conte-nos sobre sua formação, experiências práticas e conhecimentos em TCC...'
+              value={tccExperience}
+              onChange={(e) => setTccExperience(e.target.value)}
+              onBlur={() =>
+                setTouched((prev) => ({ ...prev, tccExperience: true }))
+              }
               className={cn(
                 'bg-white border-[#d9d9d9] text-[#1e1e1e] placeholder:text-gray-400 resize-y min-h-[120px]',
-                state.errors?.tccExperience && 'border-red-400'
+                (state.errors?.tccExperience ||
+                  (touched.tccExperience && clientErrors.tccExperience)) &&
+                  'border-red-400'
               )}
             />
             {state.errors?.tccExperience && (
@@ -258,6 +389,13 @@ export default function SectionSubscription() {
                 {state.errors.tccExperience[0]}
               </p>
             )}
+            {!state.errors?.tccExperience &&
+              touched.tccExperience &&
+              clientErrors.tccExperience && (
+                <p className='text-red-400 text-sm'>
+                  {clientErrors.tccExperience}
+                </p>
+              )}
           </div>
 
           {/* Divider */}
@@ -276,9 +414,17 @@ export default function SectionSubscription() {
               name='mentoringInterest'
               rows={8}
               placeholder='Compartilhe suas motivações, objetivos e expectativas com a mentoria...'
+              value={mentoringInterest}
+              onChange={(e) => setMentoringInterest(e.target.value)}
+              onBlur={() =>
+                setTouched((prev) => ({ ...prev, mentoringInterest: true }))
+              }
               className={cn(
                 'bg-white border-[#d9d9d9] text-[#1e1e1e] placeholder:text-gray-400 resize-y min-h-[160px]',
-                state.errors?.mentoringInterest && 'border-red-400'
+                (state.errors?.mentoringInterest ||
+                  (touched.mentoringInterest &&
+                    clientErrors.mentoringInterest)) &&
+                  'border-red-400'
               )}
             />
             {state.errors?.mentoringInterest && (
@@ -286,6 +432,13 @@ export default function SectionSubscription() {
                 {state.errors.mentoringInterest[0]}
               </p>
             )}
+            {!state.errors?.mentoringInterest &&
+              touched.mentoringInterest &&
+              clientErrors.mentoringInterest && (
+                <p className='text-red-400 text-sm'>
+                  {clientErrors.mentoringInterest}
+                </p>
+              )}
           </div>
 
           {/* Divider */}
@@ -295,7 +448,10 @@ export default function SectionSubscription() {
           <div className='mb-8'>
             <ScheduleSelector
               value={availability}
-              onChange={setAvailability}
+              onChange={(val) => {
+                setAvailability(val);
+                setTouched((prev) => ({ ...prev, availability: true }));
+              }}
               error={state.errors?.availability?.[0]}
             />
             {/* Hidden input para enviar availability no FormData */}
@@ -304,6 +460,13 @@ export default function SectionSubscription() {
               name='availability'
               value={JSON.stringify(availability)}
             />
+            {!state.errors?.availability &&
+              touched.availability &&
+              clientErrors.availability && (
+                <p className='text-red-400 text-sm mt-2 text-center'>
+                  {clientErrors.availability}
+                </p>
+              )}
           </div>
 
           {/* Terms Checkbox */}
@@ -311,7 +474,13 @@ export default function SectionSubscription() {
             <Checkbox
               id='acceptTerms'
               checked={acceptTerms}
-              onCheckedChange={(checked) => setAcceptTerms(checked as boolean)}
+              onCheckedChange={(checked) => {
+                setAcceptTerms(checked as boolean);
+                setTouched((prev) => ({ ...prev, acceptTerms: true }));
+                if (!participantType) {
+                  setTouched((prev) => ({ ...prev, participantType: true }));
+                }
+              }}
               className='mt-1 border-[#d9d9d9] data-[state=checked]:bg-[#fcf8f0] data-[state=checked]:text-[#3c3b39]'
             />
             <input
@@ -346,10 +515,29 @@ export default function SectionSubscription() {
               {state.errors.acceptTerms[0]}
             </p>
           )}
+          {!state.errors?.acceptTerms &&
+            touched.acceptTerms &&
+            clientErrors.acceptTerms && (
+              <p className='text-red-400 text-sm text-center mb-4'>
+                {clientErrors.acceptTerms}
+              </p>
+            )}
 
           {/* Submit Button */}
           <div className='flex justify-center'>
-            <SubmitButton />
+            <div className='relative inline-block'>
+              <SubmitButton disabled={isClientInvalid} />
+              {isClientInvalid && (
+                <button
+                  type='button'
+                  aria-label='Mostrar erros do formulário'
+                  className='absolute inset-0 bg-transparent'
+                  onClick={() =>
+                    setTouched((prev) => ({ ...prev, availability: true }))
+                  }
+                />
+              )}
+            </div>
           </div>
         </form>
       </div>
