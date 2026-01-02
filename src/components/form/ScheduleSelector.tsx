@@ -41,7 +41,8 @@ export function ScheduleSelector({
   return (
     <div className='w-full'>
       <p className='text-center text-[#fcf8f0] text-base mb-6'>
-        Quais dias você teria disponibilidade?
+        Quais dias você teria disponibilidade?{' '}
+        <span className='text-[#C67A5B]'>*</span>
       </p>
 
       <div className='flex justify-center gap-0 md:gap-2'>
@@ -69,8 +70,8 @@ export function ScheduleSelector({
                       'w-[50px] md:w-[55px] h-[41px] rounded-lg text-xs font-normal transition-all duration-200',
                       'focus:outline-none focus:ring-2 focus:ring-[#fcf8f0]/50',
                       selected
-                        ? 'bg-[#f0fcf3] text-[#3c3b39]'
-                        : 'bg-[#3c3b39] text-[#fcf8f0] border-2 border-[#f0fcf3] hover:bg-[#4a4947]'
+                        ? 'bg-[#fcf8f0] text-[#234A57]'
+                        : 'bg-[#234A57] text-[#fcf8f0] border-2 border-[#fcf8f0] hover:bg-[#1d3d48]'
                     )}
                   >
                     {periodLabels[period]}

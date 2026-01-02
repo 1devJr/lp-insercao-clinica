@@ -1,6 +1,7 @@
 'use client';
 
 import { Send } from 'lucide-react';
+import Link from 'next/link';
 import { useActionState, useEffect, useMemo, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
@@ -10,13 +11,13 @@ import {
   participantTypeLabels,
 } from '@/lib/validations/interestForm';
 
-const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 import { ScheduleSelector } from '@/components/form/ScheduleSelector';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -41,11 +42,11 @@ function SubmitButton({ disabled }: { disabled: boolean }) {
     <Button
       type='submit'
       disabled={pending || disabled}
-      className='bg-[#fcf8f0] text-[#1e1e1e] hover:bg-[#f0ece4] px-8 py-3 rounded-lg flex items-center gap-2 transition-all disabled:opacity-50'
+      className='bg-[#fcf8f0] text-[#234A57] hover:bg-[#f0ece4] px-8 py-3 rounded-lg flex items-center gap-2 transition-all disabled:opacity-50'
     >
       {pending ? (
         <>
-          <div className='w-4 h-4 border-2 border-[#3c3b39] border-t-transparent rounded-full animate-spin' />
+          <div className='w-4 h-4 border-2 border-[#234A57] border-t-transparent rounded-full animate-spin' />
           Enviando...
         </>
       ) : (
@@ -131,43 +132,31 @@ export default function SectionSubscription() {
     ) {
       errors.participantType = 'Seleção obrigatória';
     }
-    if (tccExperience.trim().length < 10)
-      errors.tccExperience = 'Descreva sua experiência (mín. 10 caracteres)';
-    if (mentoringInterest.trim().length < 10)
-      errors.mentoringInterest = 'Descreva seu interesse (mín. 10 caracteres)';
+    // tccExperience e mentoringInterest agora são opcionais
     if (!availability || availability.length === 0)
       errors.availability =
         'Selecione ao menos um horário que esteja disponível';
     if (!acceptTerms) errors.acceptTerms = 'Aceite os termos para prosseguir';
     return errors;
-  }, [
-    fullName,
-    phone,
-    email,
-    participantType,
-    tccExperience,
-    mentoringInterest,
-    availability,
-    acceptTerms,
-  ]);
+  }, [fullName, phone, email, participantType, availability, acceptTerms]);
 
   const isClientInvalid = Object.keys(clientErrors).length > 0;
 
   // Se mostrou sucesso, renderiza mensagem de confirmação
   if (showSuccess) {
     return (
-      <section className='bg-[#FCF8F0] relative py-20 px-4'>
+      <section className='bg-white relative py-20 px-4'>
         <div className='max-w-4xl mx-auto text-center'>
           <h2 className="font-['Kurale',serif] text-5xl md:text-7xl text-[#3c3b39] mb-8 tracking-tight">
             Obrigado!
           </h2>
-          <div className='bg-[#3c3b39] rounded-xl p-12 max-w-2xl mx-auto'>
+          <div className='bg-[#234A57] rounded-xl p-12 max-w-2xl mx-auto'>
             <p className='text-[#fcf8f0] text-xl leading-relaxed mb-8'>
               {state.message}
             </p>
             <Button
               onClick={() => setShowSuccess(false)}
-              className='bg-[#fcf8f0] text-[#3c3b39] hover:bg-[#f0ece4]'
+              className='bg-[#fcf8f0] text-[#234A57] hover:bg-[#f0ece4]'
             >
               Enviar outro formulário
             </Button>
@@ -180,7 +169,7 @@ export default function SectionSubscription() {
   return (
     <section
       id='subscription-form'
-      className='bg-[#FCF8F0] relative py-20 px-4 scroll-mt-8'
+      className='bg-white relative py-20 px-4 scroll-mt-8'
     >
       {/* Header */}
       <div className='max-w-4xl mx-auto text-center mb-12'>
@@ -199,7 +188,7 @@ export default function SectionSubscription() {
       <div className='max-w-[964px] mx-auto'>
         <form
           action={formAction}
-          className='bg-[#3c3b39] rounded-xl p-8 md:p-12'
+          className='bg-[#234A57] rounded-xl p-8 md:p-12'
         >
           {/* Mensagem de erro geral */}
           {state.message && !state.success && (
@@ -212,7 +201,8 @@ export default function SectionSubscription() {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
             <div className='space-y-2'>
               <Label htmlFor='fullName' className='text-[#fcf8f0]'>
-                Preencha com seu nome completo
+                Preencha com seu nome completo{' '}
+                <span className='text-[#C67A5B]'>*</span>
               </Label>
               <Input
                 id='fullName'
@@ -247,7 +237,8 @@ export default function SectionSubscription() {
 
             <div className='space-y-2'>
               <Label htmlFor='phone' className='text-[#fcf8f0]'>
-                Preencha com seu telefone
+                Preencha com seu telefone{' '}
+                <span className='text-[#C67A5B]'>*</span>
               </Label>
               <Input
                 id='phone'
@@ -277,7 +268,8 @@ export default function SectionSubscription() {
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-8'>
             <div className='space-y-2'>
               <Label htmlFor='email' className='text-[#fcf8f0]'>
-                Preencha com seu melhor email
+                Preencha com seu melhor email{' '}
+                <span className='text-[#C67A5B]'>*</span>
               </Label>
               <Input
                 id='email'
@@ -303,7 +295,9 @@ export default function SectionSubscription() {
             </div>
 
             <div className='space-y-2'>
-              <Label className='text-[#fcf8f0]'>Você é:</Label>
+              <Label className='text-[#fcf8f0]'>
+                Você é: <span className='text-[#C67A5B]'>*</span>
+              </Label>
               <RadioGroup
                 name='participantType'
                 value={participantType}
@@ -324,7 +318,7 @@ export default function SectionSubscription() {
                   />
                   <Label
                     htmlFor='student'
-                    className='text-[#b3b3b3] font-normal cursor-pointer'
+                    className='text-[#fcf8f0] font-normal cursor-pointer'
                   >
                     {participantTypeLabels[ParticipantType.STUDENT]}
                   </Label>
@@ -337,7 +331,7 @@ export default function SectionSubscription() {
                   />
                   <Label
                     htmlFor='graduated'
-                    className='text-[#b3b3b3] font-normal cursor-pointer'
+                    className='text-[#fcf8f0] font-normal cursor-pointer'
                   >
                     {participantTypeLabels[ParticipantType.GRADUATED]}
                   </Label>
@@ -484,7 +478,7 @@ export default function SectionSubscription() {
                   setTouched((prev) => ({ ...prev, participantType: true }));
                 }
               }}
-              className='mt-1 border-[#d9d9d9] data-[state=checked]:bg-[#fcf8f0] data-[state=checked]:text-[#3c3b39]'
+              className='mt-1 border-[#d9d9d9] data-[state=checked]:bg-[#fcf8f0] data-[state=checked]:text-[#234A57]'
             />
             <input
               type='hidden'
@@ -495,20 +489,21 @@ export default function SectionSubscription() {
               htmlFor='acceptTerms'
               className='text-[#fcf8f0] text-xs leading-relaxed max-w-lg cursor-pointer'
             >
+              <span className='text-[#C67A5B] mr-1'>*</span>
               Seus dados estão protegidos! Ao enviar, você concorda com nossos{' '}
-              <a
-                href='#'
+              <Link
+                href='/termos-de-uso'
                 className='underline hover:text-[#C67A5B] transition-colors'
               >
                 Termos de Uso
-              </a>{' '}
+              </Link>{' '}
               e{' '}
-              <a
-                href='#'
+              <Link
+                href='/politica-de-privacidade'
                 className='underline hover:text-[#C67A5B] transition-colors'
               >
                 Política de Privacidade
-              </a>
+              </Link>
               . Garantimos que suas informações serão tratadas com segurança e
               usadas apenas para fins relevantes.
             </Label>

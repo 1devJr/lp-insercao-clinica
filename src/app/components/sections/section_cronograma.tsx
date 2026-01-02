@@ -134,11 +134,11 @@ const TimelineItem = ({
   }, [onVisibilityChange]);
 
   // Cores quando ativo (scroll)
-  const activeBgColor = isDark ? 'bg-[#2a2928]' : 'bg-[#e8e4dc]';
-  const activeTextColor = isDark ? 'text-[#fcf8f0]' : 'text-[#3c3b39]';
+  const activeBgColor = 'bg-[#234A57]';
+  const activeTextColor = 'text-[#fcf8f0]';
 
   // Cores quando inativo (branco/claro)
-  const inactiveBgColor = 'bg-[#fcf8f0]';
+  const inactiveBgColor = 'bg-white';
   const inactiveTextColor = 'text-[#3c3b39]';
 
   // Bônus sempre tem cor diferente
@@ -148,7 +148,7 @@ const TimelineItem = ({
     ? activeBgColor
     : inactiveBgColor;
   const bonusText = isBonus
-    ? 'text-[#3c3b39]'
+    ? 'text-[#fcf8f0]'
     : isVisible
     ? activeTextColor
     : inactiveTextColor;
@@ -255,14 +255,14 @@ const encontros: EncontroData[] = [
   },
   {
     numero: 4,
-    titulo: 'Conceitualização De Caso 1',
+    titulo: 'Conceitualização De Caso I',
     descricao:
       'Como conceitualizar em TCC e entender como identificar crenças (central e intermediárias), Pensamentos Automáticos, regras e pressupostos, além de aprender a principal técnica de trabalho da TCC: o RPD.',
     isDark: true,
   },
   {
     numero: 5,
-    titulo: 'Conceitualização De Casos 2',
+    titulo: 'Conceitualização De Casos II',
     descricao:
       'Como conceitualizar em Terapia do Esquema e contextuais. Entender a lógica da conceitualização de caso independentemente da linha teórica escolhida.',
     destaque:
@@ -330,38 +330,37 @@ export default function SectionCronograma() {
 
   // Calcula a altura da linha de progresso baseado nos itens visíveis
   useEffect(() => {
-    const lastVisibleIndex = visibleItems.lastIndexOf(true);
-    if (lastVisibleIndex === -1 || !timelineContainerRef.current) {
-      setMobileProgressHeight(0);
-      return;
-    }
+    const updateHeights = () => {
+      const lastVisibleIndex = visibleItems.lastIndexOf(true);
 
-    const lastVisibleItem = itemRefs.current[lastVisibleIndex];
-
-    if (lastVisibleItem) {
-      // Usa offsetTop para posição relativa ao container pai
-      // Soma top-6 (24px) + metade da bolinha (8px) para alinhar no centro
-      const height = lastVisibleItem.offsetTop + 32; // 24px + 8px = centro da bolinha
-      setMobileProgressHeight(Math.max(0, height));
-    }
-  }, [visibleItems]);
-
-  // Calcula a altura total da linha de fundo (até a última bolinha)
-  // Recalcula sempre que a visibilidade mudar (pois os cards expandem/contraem)
-  useEffect(() => {
-    const updateBackgroundHeight = () => {
+      // Atualiza altura da linha de fundo (sempre vai até a última bolinha)
       const lastItem = itemRefs.current[encontros.length - 1];
       if (lastItem) {
-        // Alinha a linha de fundo ao centro da última bolinha
-        const height = lastItem.offsetTop + 32; // 24px + 8px
-        setMobileBackgroundLineHeight(height);
+        const bgHeight = lastItem.offsetTop + 32; // 24px + 8px = centro da bolinha
+        setMobileBackgroundLineHeight(bgHeight);
+      }
+
+      // Atualiza altura da linha de progresso
+      if (lastVisibleIndex === -1 || !timelineContainerRef.current) {
+        setMobileProgressHeight(0);
+        return;
+      }
+
+      const lastVisibleItem = itemRefs.current[lastVisibleIndex];
+      if (lastVisibleItem) {
+        // Usa offsetTop para posição relativa ao container pai
+        // Soma top-6 (24px) + metade da bolinha (8px) para alinhar no centro
+        const height = lastVisibleItem.offsetTop + 32;
+        setMobileProgressHeight(Math.max(0, height));
       }
     };
 
-    // Pequeno delay para garantir que os refs e layout estejam atualizados
-    const timer = setTimeout(updateBackgroundHeight, 150);
+    // Atualiza imediatamente e também após um pequeno delay para pegar as expansões dos cards
+    updateHeights();
+    const timer = setTimeout(updateHeights, 200);
+
     return () => clearTimeout(timer);
-  }, [visibleItems]); // Recalcula quando a visibilidade mudar
+  }, [visibleItems]);
 
   const handleVisibilityChange = (index: number, isVisible: boolean) => {
     setVisibleItems((prev) => {
@@ -372,13 +371,14 @@ export default function SectionCronograma() {
   };
 
   return (
-    <section className='bg-[#3c3b39] relative py-20 px-4 overflow-hidden'>
+    <section className='bg-[#FCF8F0] relative py-20 px-4 overflow-hidden'>
       {/* Header */}
       <div className='max-w-4xl mx-auto text-center mb-16'>
-        <h2 className="font-['Kurale',serif] text-6xl md:text-7xl text-[#fcf8f0] mb-8 tracking-tight">
+        <h2 className="font-['Kurale',serif] text-6xl md:text-7xl text-[#2a2928] mb-4 tracking-tight">
           Cronograma
         </h2>
-        <p className='text-[#fcf8f0] text-base leading-relaxed max-w-3xl mx-auto'>
+        <div className='w-24 h-1 bg-[#C67A5B] mx-auto mb-8' />
+        <p className='text-[#3c3b39] text-base leading-relaxed max-w-3xl mx-auto'>
           Confira abaixo o conteúdo programático de cada encontro. Cada tema foi
           cuidadosamente planejado para apoiar o desenvolvimento das habilidades
           essenciais para prática de um psicólogo de sucesso.
@@ -387,28 +387,28 @@ export default function SectionCronograma() {
 
       {/* Timeline */}
       {(() => {
-        const isLastVisible = visibleItems[encontros.length - 1];
-        const backgroundHeight = isLastVisible
-          ? mobileProgressHeight
-          : mobileBackgroundLineHeight > 0
-          ? mobileBackgroundLineHeight
-          : undefined;
-        const progressHeight = backgroundHeight
-          ? Math.min(mobileProgressHeight, backgroundHeight)
-          : mobileProgressHeight;
+        // A linha de fundo sempre vai até a última bolinha
+        const backgroundHeight =
+          mobileBackgroundLineHeight > 0
+            ? mobileBackgroundLineHeight
+            : undefined;
+
+        // A linha de progresso vai até o último item visível
+        const progressHeight = mobileProgressHeight;
 
         return (
           <div
             className='max-w-5xl mx-auto relative'
             ref={timelineContainerRef}
           >
-            {/* Linha de fundo mobile (cinza claro) - termina na última bolinha ou junto ao progresso final */}
+            {/* Linha de fundo mobile (cinza claro) - sempre vai até a última bolinha */}
             <div
-              className='md:hidden absolute left-6 top-0 w-0.5 bg-[#fcf8f0]/30 -translate-x-1/2 translate-x-[2px] translate-y-[1px]'
+              className='md:hidden absolute left-6 top-0 w-0.5 bg-[#2a2928]/10 -translate-x-1/2 translate-x-[2px] translate-y-[1px]'
               style={{
                 height: backgroundHeight ? `${backgroundHeight}px` : '100%',
               }}
             />
+            {/* Linha de progresso mobile (cor terracota) - vai até o último item visível */}
             <div
               className='md:hidden absolute left-6 w-0.5 bg-[#C67A5B] transition-all duration-500 ease-out -translate-x-1/2 translate-x-[2px] translate-y-[1px]'
               style={{
@@ -424,21 +424,19 @@ export default function SectionCronograma() {
 
                 // Cor da linha de conexão muda baseado na visibilidade
                 const lineColor = isItemVisible
-                  ? 'bg-[#2a2928]'
-                  : 'bg-[#fcf8f0]';
+                  ? 'bg-[#234A57]'
+                  : 'bg-[#2a2928]/10';
 
                 // Cor da bolinha muda baseado na visibilidade
-                const dotBgColor = isItemVisible
-                  ? 'bg-[#C67A5B]'
-                  : 'bg-[#fcf8f0]';
+                const dotBgColor = isItemVisible ? 'bg-[#C67A5B]' : 'bg-white';
                 const dotBorderColor = isItemVisible
-                  ? 'border-[#fcf8f0]'
-                  : 'border-[#3c3b39]';
+                  ? 'border-white'
+                  : 'border-[#2a2928]/20';
 
                 // Cor do segmento vertical da timeline (entre este item e o próximo)
                 const verticalLineColor = isItemVisible
-                  ? 'bg-[#2a2928]'
-                  : 'bg-[#fcf8f0]/30';
+                  ? 'bg-[#234A57]'
+                  : 'bg-[#2a2928]/10';
 
                 return (
                   <div
@@ -456,7 +454,7 @@ export default function SectionCronograma() {
                     {/* Mobile: Linha horizontal conectando bolinha ao card */}
                     <div
                       className={`md:hidden absolute left-8 top-6 h-0.5 transition-all duration-300 ease-out ${
-                        isItemVisible ? 'bg-[#C67A5B]' : 'bg-[#fcf8f0]/50'
+                        isItemVisible ? 'bg-[#C67A5B]' : 'bg-[#2a2928]/10'
                       }`}
                       style={{
                         top: '1.85rem',
@@ -470,12 +468,12 @@ export default function SectionCronograma() {
                       <div
                         className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 transition-colors duration-700 ${
                           visibleItems[index - 1]
-                            ? 'bg-[#2a2928]'
-                            : 'bg-[#fcf8f0]/30'
+                            ? 'bg-[#234A57]'
+                            : 'bg-[#2a2928]/10'
                         }`}
                         style={{
-                          top: '-48px',
-                          height: '48px',
+                          top: '-75px',
+                          height: 'calc(50% + 75px)',
                         }}
                       />
                     )}
@@ -486,7 +484,7 @@ export default function SectionCronograma() {
                         className={`hidden md:block absolute left-1/2 transform -translate-x-1/2 w-1 transition-colors duration-700 ${verticalLineColor}`}
                         style={{
                           top: '50%',
-                          height: 'calc(100% + 48px)',
+                          bottom: '-75px',
                         }}
                       />
                     )}

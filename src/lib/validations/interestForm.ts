@@ -49,14 +49,14 @@ export const interestFormSchema = z.object({
   // Experiência com TCC
   tccExperience: z
     .string()
-    .min(10, 'Descreva sua experiência com pelo menos 10 caracteres')
-    .max(2000, 'Descrição deve ter no máximo 2000 caracteres'),
+    .max(2000, 'Descrição deve ter no máximo 2000 caracteres')
+    .optional(),
 
   // Interesse na mentoria
   mentoringInterest: z
     .string()
-    .min(10, 'Descreva seu interesse com pelo menos 10 caracteres')
-    .max(2000, 'Descrição deve ter no máximo 2000 caracteres'),
+    .max(2000, 'Descrição deve ter no máximo 2000 caracteres')
+    .optional(),
 
   // Disponibilidade (array de combinações dia + período)
   availability: z
