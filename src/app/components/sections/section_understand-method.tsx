@@ -262,12 +262,54 @@ export default function SectionUnderstandMethod() {
 
   return (
     <>
+      {/* Versão MOBILE - Cards empilhados verticalmente */}
       <div
-        ref={sectionRef}
-        className='section-mentoring relative'
+        className='md:hidden section-mentoring relative py-16 px-6'
         style={{
           backgroundImage: "url('/images/BackgroundTerracota.png')",
-          height: `${mentoringItems.length * 120}vh`, // altura menor para concluir o movimento com sticky preso
+        }}
+      >
+        <div className='absolute inset-0 bg-[#C67A5B]/85' />
+        <div className='absolute inset-0 bg-gradient-to-b from-white/16 via-white/10 to-white/6' />
+
+        <div className='relative z-10'>
+          {/* Título */}
+          <div className='w-full flex justify-center items-center flex-col gap-4 text-center mb-8'>
+            <h1 className="text-4xl font-['Kurale',serif] font-semibold text-[#0B0F12]">
+              Entenda nosso método
+            </h1>
+            <span className='h-[3px] w-20 bg-[#234A57] rounded-full' />
+          </div>
+
+          {/* Descrição */}
+          <p className='max-w-3xl mx-auto text-[#0B0F12]/80 text-base leading-relaxed text-center mb-10'>
+            Um caminho estruturado para você evoluir na prática clínica com
+            segurança, suporte e método.
+          </p>
+
+          {/* Cards empilhados */}
+          <div className='flex flex-col gap-8 items-center'>
+            {mentoringItems.map((item, index) => (
+              <div key={index} className='w-full max-w-[320px] aspect-[4/5]'>
+                <MethodItem
+                  text={item.text}
+                  image={item.image}
+                  backContent={item.backContent}
+                  index={index}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Versão DESKTOP - Carrossel horizontal com scroll */}
+      <div
+        ref={sectionRef}
+        className='hidden md:block section-mentoring relative'
+        style={{
+          backgroundImage: "url('/images/BackgroundTerracota.png')",
+          height: `${mentoringItems.length * 120}vh`,
         }}
       >
         <div className='absolute inset-0 bg-[#C67A5B]/85' />
@@ -275,9 +317,9 @@ export default function SectionUnderstandMethod() {
 
         <div className='sticky top-0 h-screen w-full overflow-hidden'>
           {/* Título no topo */}
-          <div className='relative z-20 max-w-6xl mx-auto px-6 md:px-10 pt-12 md:pt-16 w-full'>
+          <div className='relative z-20 max-w-6xl mx-auto px-10 pt-16 w-full'>
             <div className='w-full flex justify-center items-center flex-col gap-4 text-center'>
-              <h1 className="text-4xl md:text-5xl font-['Kurale',serif] font-semibold text-[#0B0F12]">
+              <h1 className="text-5xl font-['Kurale',serif] font-semibold text-[#0B0F12]">
                 Entenda nosso método
               </h1>
               <span className='h-[3px] w-20 bg-[#234A57] rounded-full' />
@@ -285,8 +327,8 @@ export default function SectionUnderstandMethod() {
           </div>
 
           {/* Texto descrição centralizado entre título e cards */}
-          <div className='relative z-20 flex justify-center items-center px-6 md:px-10 mt-8 md:mt-12'>
-            <p className='max-w-3xl text-[#0B0F12]/80 text-base md:text-lg leading-relaxed text-center'>
+          <div className='relative z-20 flex justify-center items-center px-10 mt-12'>
+            <p className='max-w-3xl text-[#0B0F12]/80 text-lg leading-relaxed text-center'>
               Um caminho estruturado para você evoluir na prática clínica com
               segurança, suporte e método.
             </p>
@@ -307,7 +349,7 @@ export default function SectionUnderstandMethod() {
                 {mentoringItems.map((item, index) => (
                   <div
                     key={index}
-                    className='flex min-w-[75vw] sm:min-w-[60vw] md:min-w-[360px] md:w-[360px] aspect-[4/5]'
+                    className='flex min-w-[360px] w-[360px] aspect-[4/5]'
                   >
                     <div
                       className={`w-full h-full transition-transform duration-400 ease-out ${
@@ -332,7 +374,7 @@ export default function SectionUnderstandMethod() {
           {/* Botões de navegação */}
           <button
             onClick={() => navigateCarousel('prev')}
-            className={`absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full transition-all duration-300 ${
+            className={`absolute left-8 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full transition-all duration-300 ${
               activeIndex === 0
                 ? 'opacity-20 cursor-not-allowed'
                 : 'opacity-40 hover:opacity-70 hover:bg-[#0B0F12]/10'
@@ -346,7 +388,7 @@ export default function SectionUnderstandMethod() {
               viewBox='0 0 24 24'
               strokeWidth={2}
               stroke='currentColor'
-              className='w-8 h-8 md:w-10 md:h-10 text-[#0B0F12]'
+              className='w-10 h-10 text-[#0B0F12]'
             >
               <path
                 strokeLinecap='round'
@@ -358,7 +400,7 @@ export default function SectionUnderstandMethod() {
 
           <button
             onClick={() => navigateCarousel('next')}
-            className={`absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full transition-all duration-300 ${
+            className={`absolute right-8 top-1/2 -translate-y-1/2 z-30 p-2 rounded-full transition-all duration-300 ${
               activeIndex === mentoringItems.length - 1
                 ? 'opacity-40 hover:opacity-70 hover:bg-[#0B0F12]/10'
                 : 'opacity-40 hover:opacity-70 hover:bg-[#0B0F12]/10'
@@ -376,7 +418,7 @@ export default function SectionUnderstandMethod() {
                 viewBox='0 0 24 24'
                 strokeWidth={2}
                 stroke='currentColor'
-                className='w-8 h-8 md:w-10 md:h-10 text-[#0B0F12]'
+                className='w-10 h-10 text-[#0B0F12]'
               >
                 <path
                   strokeLinecap='round'
@@ -391,7 +433,7 @@ export default function SectionUnderstandMethod() {
                 viewBox='0 0 24 24'
                 strokeWidth={2}
                 stroke='currentColor'
-                className='w-8 h-8 md:w-10 md:h-10 text-[#0B0F12]'
+                className='w-10 h-10 text-[#0B0F12]'
               >
                 <path
                   strokeLinecap='round'

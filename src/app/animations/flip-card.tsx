@@ -62,41 +62,59 @@ const FlipCard: React.FC<FlipCardProps> = ({
     return () => window.removeEventListener('resize', checkTouch);
   }, []);
 
-  // Intersection Observer para flip no scroll (apenas mobile)
+  // Scroll listener para flip baseado na posição vertical (mobile com cards empilhados)
   useEffect(() => {
     if (!isTouchDevice || !containerRef.current) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!containerRef.current) return;
+    const handleScroll = () => {
+      if (!containerRef.current) return;
 
-          const rect = containerRef.current.getBoundingClientRect();
-          const screenWidth = window.innerWidth;
-          const leftEdgePercent = rect.left / screenWidth;
+      const rect = containerRef.current.getBoundingClientRect();
+      const screenHeight = window.innerHeight;
+      const screenWidth = window.innerWidth;
 
-          // Flip quando a borda esquerda do card está a ~20% da borda esquerda da tela
-          if (entry.isIntersecting && leftEdgePercent <= 0.2) {
-            setIsFlipped(true);
-            setSpotlightOpacity(0.6);
-            onHover?.(true);
-          } else if (leftEdgePercent > 0.15) {
-            // Desvira quando a borda esquerda está a mais de 15% da tela
-            setIsFlipped(false);
-            setSpotlightOpacity(0);
-            onHover?.(false);
-          }
-        });
-      },
-      {
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-        rootMargin: '0px',
+      // Verifica se é layout mobile (largura < 768px) - cards empilhados verticalmente
+      const isMobileLayout = screenWidth < 768;
+
+      if (isMobileLayout) {
+        // Mobile: flip baseado na posição vertical (top do card)
+        const topEdgePercent = rect.top / screenHeight;
+
+        // Flip quando o topo do card está a 15% do topo da viewport
+        if (topEdgePercent <= 0.15 && topEdgePercent > -0.5) {
+          setIsFlipped(true);
+          setSpotlightOpacity(0.6);
+          onHover?.(true);
+        } else if (topEdgePercent > 0.2) {
+          // Desvira quando o topo está a mais de 20% da tela
+          setIsFlipped(false);
+          setSpotlightOpacity(0);
+          onHover?.(false);
+        }
+      } else {
+        // Desktop/Tablet: flip baseado na posição horizontal (carrossel)
+        const leftEdgePercent = rect.left / screenWidth;
+
+        if (leftEdgePercent <= 0.2) {
+          setIsFlipped(true);
+          setSpotlightOpacity(0.6);
+          onHover?.(true);
+        } else if (leftEdgePercent > 0.15) {
+          setIsFlipped(false);
+          setSpotlightOpacity(0);
+          onHover?.(false);
+        }
       }
-    );
+    };
 
-    observer.observe(containerRef.current);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
 
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, [isTouchDevice, onHover]);
 
   const handleMouseMove: React.MouseEventHandler<HTMLDivElement> = (e) => {

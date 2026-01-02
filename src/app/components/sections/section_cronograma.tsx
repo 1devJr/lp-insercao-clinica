@@ -231,71 +231,79 @@ interface EncontroData {
 const encontros: EncontroData[] = [
   {
     numero: 1,
-    titulo: 'Potencialidade e dificuldades na relação terapêutica',
+    titulo:
+      'Administração Do Consultório E Relação Terapêutica No Contato Inicial',
     descricao:
-      'Explore os fundamentos da relação terapêutica, identificando potencialidades e desafios para construir vínculos sólidos com seus pacientes.',
+      'Passo a passo sobre toda a burocracia da clínica: contato inicial, agendamento, cobranças, notas desmarcações e demais combinações. Entender o que as pesquisas falam sobre como criar uma relação terapêutica sólida. Esse é o principal ponto de partida de qualquer trabalho terapêutico durador e efetivo.',
     isDark: true,
   },
   {
     numero: 2,
-    titulo: 'Administração do consultório',
+    titulo: 'Primeira Sessão',
     descricao:
-      'Aprenda a gerenciar seu consultório de forma eficiente: agendamentos, prontuários, contratos e organização financeira.',
+      'Tudo que preciso saber para fazer uma sessão de avaliação, anamnese e uma sessão inicial (começar os trabalhos efetivamente) em psicoterapia.',
+    destaque:
+      'Aqui você já terá a indicação de um paciente para iniciar sua prática.',
     isDark: true,
   },
   {
     numero: 3,
-    titulo: 'Início da prática clínica',
+    titulo: 'Sessões Intermediárias',
     descricao:
-      'Dê os primeiros passos na sua prática clínica com confiança, aprendendo técnicas e abordagens essenciais.',
-    destaque:
-      'Após este encontro você estará apto a iniciar seus primeiros atendimentos supervisionados!',
+      'Como é a estrutura das sessões posteriores. O que preciso saber para dar seguimento ao tratamento? Como desenvolver um raciocínio clínico que garante fundamentação cientifica ao trabalho e efetividade no alcance das metas terapêuticas.',
     isDark: true,
   },
   {
     numero: 4,
-    titulo: 'Estrutura de primeira sessão e avaliação',
+    titulo: 'Conceitualização De Caso 1',
     descricao:
-      'Compreenda como estruturar sua primeira sessão de forma eficaz, incluindo técnicas de avaliação inicial e estabelecimento de rapport com o paciente.',
+      'Como conceitualizar em TCC e entender como identificar crenças (central e intermediárias), Pensamentos Automáticos, regras e pressupostos, além de aprender a principal técnica de trabalho da TCC: o RPD.',
     isDark: true,
   },
   {
     numero: 5,
-    titulo: 'Sessões posteriores e Intermediárias',
+    titulo: 'Conceitualização De Casos 2',
     descricao:
-      'Aprenda a conduzir sessões de acompanhamento, mantendo o engajamento do paciente e ajustando o plano terapêutico conforme necessário.',
+      'Como conceitualizar em Terapia do Esquema e contextuais. Entender a lógica da conceitualização de caso independentemente da linha teórica escolhida.',
+    destaque:
+      'Aqui você já será capaz de montar a estrutura de suas sessões e ter compreensão do seu paciente com embasamento científico.',
     isDark: true,
   },
   {
     numero: 6,
-    titulo: 'Conceitualização de casos I',
+    titulo: 'Treinando O Raciocínio Clínico E Exercício Prático',
     descricao:
-      'Desenvolva habilidades para conceitualizar casos clínicos, identificando padrões cognitivos e comportamentais relevantes para o tratamento.',
+      'Como aprender a pensar como psicólogo clínico independente do caso ou abordagem utilizada.',
     isDark: true,
   },
   {
     numero: 7,
-    titulo: 'Conceitualização de casos II',
+    titulo: 'Principais Técnicas Em TCC E TE',
     descricao:
-      'Aprofunde sua capacidade de análise de casos complexos, integrando diferentes abordagens terapêuticas para resultados mais efetivos.',
-    destaque:
-      'Neste ponto você já está apto a realizar atendimentos de forma independente com supervisão periódica!',
+      'Aprenda as principais técnicas e como aprender outras técnicas uteis para o desenvolvimento de suas habilidades terapêuticas.',
     isDark: true,
   },
   {
     numero: 8,
-    titulo: 'Literatura Base',
+    titulo: 'Literatura Base Para Diferentes Demandas',
     descricao:
-      'Conheça as principais referências bibliográficas e estudos científicos que fundamentam a prática clínica em TCC e abordagens contextuais.',
+      'Onde encontrar o que preciso para saber tratar qualquer demanda? Entenda como pesquisar e conheça bases seguras para sua educação continuada e constante evolução profissional com o que há de mais atualizado.',
+    destaque:
+      'Aqui você será capaz de tratar as diferentes demandas que aparecem no consultório e saber como manter-se em contante evolução profissional.',
+    isDark: true,
+  },
+  {
+    numero: 9,
+    titulo: 'Supervisão',
+    descricao:
+      'Encontro exclusivo para supervisão de casos e esclarecimento de dúvidas. Obs.: Ao longo de toda a mentoria, você conta com supervisão e acompanhamento contínuos para evoluir como terapeuta com segurança, além de aprender por meio da troca clínica e da supervisão dos casos de outros profissionais.',
     isDark: true,
   },
   {
     numero: 'Bônus',
-    titulo: 'Supervisão com um profissional experiente',
+    titulo: 'Workbook Exclusivo De Terapia Do Esquema',
     descricao:
-      'Sessão especial de supervisão clínica com profissional experiente para discutir casos reais e receber orientações personalizadas.',
-    destaque:
-      'Incluso no programa! Supervisão individual para potencializar seu desenvolvimento profissional.',
+      'Workbook exclusivo e prático de Terapia do Esquema para psicólogos iniciantes, com exercícios que ajudam você a se experimentar com mais segurança e fortalecer sua atuação como terapeuta do esquema.',
     isBonus: true,
     isDark: false,
   },
@@ -371,12 +379,9 @@ export default function SectionCronograma() {
           Cronograma
         </h2>
         <p className='text-[#fcf8f0] text-base leading-relaxed max-w-3xl mx-auto'>
-          Abaixo você verá o conteúdo programático que será abordado em cada
-          encontro, detalhando tudo o que você poderá aprender e experienciar ao
-          longo do processo. Cada tema foi cuidadosamente planejado para
-          proporcionar uma jornada de conhecimento e prática, garantindo que
-          você desenvolva as habilidades essenciais para sua atuação. Explore os
-          tópicos e prepare-se para uma experiência enriquecedora!
+          Confira abaixo o conteúdo programático de cada encontro. Cada tema foi
+          cuidadosamente planejado para apoiar o desenvolvimento das habilidades
+          essenciais para prática de um psicólogo de sucesso.
         </p>
       </div>
 
