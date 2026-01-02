@@ -25,46 +25,46 @@ const MethodItem = ({
   return (
     <FlipCard
       className='text-[#0B0F12]'
-      height={360}
+      height='100%'
       width='100%'
       backgroundColor='#FCF8F0'
       borderColor='#3b2a24'
       borderWidth={1}
       front={
-        <div className='flex h-full w-full flex-col items-start justify-between gap-4 text-left rounded-2xl p-8'>
-          <div className='flex items-center gap-3 text-[#234A57] font-semibold tracking-tight'>
-            <span className='text-sm px-3 py-1 bg-[#234A57]/10 rounded-full'>
+        <div className='flex h-full w-full flex-col items-start justify-between gap-2 text-left rounded-2xl p-5 md:p-6'>
+          <div className='flex items-center gap-2 text-[#234A57] font-semibold tracking-tight'>
+            <span className='text-xs px-2 py-0.5 bg-[#234A57]/10 rounded-full'>
               {numberLabel}
             </span>
-            <span className='text-base uppercase'>Etapa</span>
+            <span className='text-sm uppercase'>Etapa</span>
           </div>
           <div className='flex w-full items-center justify-center'>
             <Image
               src={image}
               alt='Mentoring Icon'
-              width={80}
-              height={80}
-              className='w-auto h-auto'
+              width={90}
+              height={90}
+              className='w-[90px] h-[90px]'
               style={{
                 filter:
                   'brightness(0) saturate(100%) invert(5%) sepia(8%) saturate(1089%) hue-rotate(155deg) brightness(97%) contrast(93%)',
               }}
             />
           </div>
-          <h3 className='text-2xl font-semibold text-[#0B0F12] leading-tight'>
+          <h3 className='text-lg md:text-xl font-semibold text-[#0B0F12] leading-tight'>
             {text}
           </h3>
         </div>
       }
       back={
-        <div className='flex h-full w-full flex-col items-start justify-between gap-4 text-left rounded-2xl p-8'>
-          <div className='flex items-center gap-3 text-[#234A57] font-semibold tracking-tight'>
-            <span className='text-sm px-3 py-1 bg-[#234A57]/10 rounded-full'>
+        <div className='flex h-full w-full flex-col items-start justify-between gap-2 text-left rounded-2xl p-5 md:p-6'>
+          <div className='flex items-center gap-2 text-[#234A57] font-semibold tracking-tight'>
+            <span className='text-xs px-2 py-0.5 bg-[#234A57]/10 rounded-full'>
               {numberLabel}
             </span>
-            <span className='text-base uppercase'>Detalhe</span>
+            <span className='text-sm uppercase'>Detalhe</span>
           </div>
-          <p className='text-base leading-relaxed text-[#0B0F12]/80'>
+          <p className='text-sm md:text-base leading-relaxed text-[#0B0F12]/80'>
             {backContent}
           </p>
         </div>
@@ -199,19 +199,23 @@ export default function SectionUnderstandMethod() {
                 Entenda nosso método
               </h1>
               <span className='h-[3px] w-20 bg-[#234A57] rounded-full' />
-              <p className='max-w-3xl text-[#0B0F12]/80 text-base md:text-lg leading-relaxed'>
-                Um caminho estruturado para você evoluir na prática clínica com
-                segurança, suporte e método.
-              </p>
             </div>
           </div>
 
+          {/* Texto descrição centralizado entre título e cards */}
+          <div className='relative z-20 flex justify-center items-center px-6 md:px-10 mt-8 md:mt-12'>
+            <p className='max-w-3xl text-[#0B0F12]/80 text-base md:text-lg leading-relaxed text-center'>
+              Um caminho estruturado para você evoluir na prática clínica com
+              segurança, suporte e método.
+            </p>
+          </div>
+
           {/* Carrossel em full width abaixo do título */}
-          <div className='absolute inset-x-0 top-[40%] z-10'>
-            <div className='overflow-visible pb-48'>
+          <div className='absolute inset-x-0 top-[35%] z-10'>
+            <div className='overflow-visible pb-32'>
               <div
                 ref={carouselRef}
-                className='flex gap-6 pb-8'
+                className='flex gap-10 pb-8'
                 style={{
                   transition: 'transform 0.12s ease-out',
                   paddingLeft: '45vw',
@@ -221,10 +225,10 @@ export default function SectionUnderstandMethod() {
                 {mentoringItems.map((item, index) => (
                   <div
                     key={index}
-                    className='flex h-full min-w-[82vw] sm:min-w-[70vw] md:min-w-[56vw] lg:min-w-[40vw]'
+                    className='flex min-w-[75vw] sm:min-w-[60vw] md:min-w-[360px] md:w-[360px] aspect-[4/5]'
                   >
                     <div
-                      className={`w-full transition-transform duration-400 ease-out ${
+                      className={`w-full h-full transition-transform duration-400 ease-out ${
                         activeIndex === index
                           ? 'scale-100 opacity-100'
                           : 'scale-[0.95] opacity-80'

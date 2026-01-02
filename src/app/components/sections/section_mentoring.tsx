@@ -7,7 +7,7 @@ import AnimatedContent from '@/app/animations/animated-content';
 
 interface MentoringItemProps {
   image: string;
-  text: string;
+  text: string | React.ReactNode;
   index: number;
 }
 
@@ -66,15 +66,48 @@ export default function SectionMentoring() {
   const mentoringItems = [
     {
       image: '/images/MentoriaIcon1.svg',
-      text: 'Sabemos que começar na clínica pode ser um desafio. Insegurança, falta de experiência prática e dúvidas sobre como consolidar sua agenda de pacientes são algumas das dificuldades mais comuns.',
+      text: (
+        <>
+          Sabemos que começar na clínica pode ser um{' '}
+          <span className='text-[#C67A5B] font-semibold'>desafio</span>.
+          Insegurança, falta de experiência prática e dúvidas sobre como
+          consolidar sua agenda de pacientes são algumas das{' '}
+          <span className='text-[#C67A5B] font-semibold'>dificuldades</span>{' '}
+          mais comuns.
+        </>
+      ),
     },
     {
       image: '/images/MentoriaIcon2.svg',
-      text: `Pensando nisso, criamos esta mentoria para guiar psicólogos recém-formados ou que ainda não atuam na clínica a construírem uma carreira sólida e sustentável.`,
+      text: (
+        <>
+          Pensando nisso, criamos esta mentoria para{' '}
+          <span className='text-[#C67A5B] font-semibold'>
+            guiar psicólogos{' '}
+          </span>
+          recém-formados ou que ainda não atuam na clínica a construírem uma
+          carreira{' '}
+          <span className='text-[#C67A5B] font-semibold'>
+            sólida e sustentável
+          </span>
+          .
+        </>
+      ),
     },
     {
       image: '/images/MentoriaIcon3.svg',
-      text: `Com metodologia estruturada, conteúdo prático e suporte contínuo, você aprenderá a se posicionar no mercado, captar pacientes e desenvolver segurança na sua atuação clínica.`,
+      text: (
+        <>
+          Com metodologia estruturada, conteúdo prático e suporte contínuo, você
+          aprenderá a{' '}
+          <span className='text-[#C67A5B] font-semibold'>se posicionar</span> no
+          mercado,{' '}
+          <span className='text-[#C67A5B] font-semibold'>manter pacientes</span>{' '}
+          e desenvolver{' '}
+          <span className='text-[#C67A5B] font-semibold'>segurança</span> na sua
+          atuação clínica.
+        </>
+      ),
     },
     // Adicione mais objetos aqui conforme necessário
   ];

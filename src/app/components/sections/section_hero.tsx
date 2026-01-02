@@ -22,7 +22,7 @@ export default function SectionHero() {
     <>
       <section className='section-hero relative'>
         <div className='container mx-auto flex flex-col items-start justify-end h-screen relative px-4 pb-20 md:pb-0'>
-          <div className='flex flex-col gap-4 mb-auto mt-auto md:mb-0 md:mt-0 md:absolute md:bottom-80'>
+          <div className='flex flex-col gap-12 mb-auto mt-auto md:mb-0 md:mt-0 md:absolute md:bottom-60'>
             <h1 className='title text-5xl sm:text-6xl md:text-7xl font-serif font-normal max-w-4xl leading-tight'>
               Projeto Inserção na clínica psicológica
             </h1>
