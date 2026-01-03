@@ -71,6 +71,7 @@ export default function SectionUnderstandMethod() {
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isAtEnd, setIsAtEnd] = useState(false);
 
   const mentoringItems = [
     {
@@ -147,28 +148,36 @@ export default function SectionUnderstandMethod() {
 
   // Função para navegar pelos cards
   const navigateCarousel = (direction: 'prev' | 'next') => {
-    // Se estiver no último card e clicar em next, scroll para próxima seção
-    if (direction === 'next' && activeIndex === mentoringItems.length - 1) {
-      const section = sectionRef.current;
-      if (!section) return;
+    const lastIndex = mentoringItems.length - 1;
 
-      // Encontra a próxima seção após esta
-      const nextSection = section.nextElementSibling as HTMLElement;
-      if (nextSection) {
-        nextSection.scrollIntoView({ behavior: 'smooth' });
+    if (isAtEnd) {
+      if (direction === 'next') {
+        if (activeIndex === lastIndex) {
+          const section = sectionRef.current;
+          if (!section) return;
+
+          const nextSection = section.nextElementSibling as HTMLElement;
+          if (nextSection) {
+            nextSection.scrollIntoView({ behavior: 'smooth' });
+          } else {
+            window.scrollTo({
+              top: section.offsetTop + section.offsetHeight,
+              behavior: 'smooth',
+            });
+          }
+          return;
+        }
+
+        setActiveIndex((prev) => Math.min(prev + 1, lastIndex));
       } else {
-        // Se não houver próxima seção, scroll para o fim desta seção
-        window.scrollTo({
-          top: section.offsetTop + section.offsetHeight,
-          behavior: 'smooth',
-        });
+        setActiveIndex((prev) => Math.max(prev - 1, 0));
       }
       return;
     }
 
     const newIndex =
       direction === 'next'
-        ? Math.min(activeIndex + 1, mentoringItems.length - 1)
+        ? Math.min(activeIndex + 1, lastIndex)
         : Math.max(activeIndex - 1, 0);
 
     const section = sectionRef.current;
@@ -183,8 +192,7 @@ export default function SectionUnderstandMethod() {
       section.offsetTop + section.offsetHeight - viewportHeight + endOffset;
     const totalScroll = endScroll - startScroll;
 
-    // Calcula a posição do scroll para o novo índice
-    const targetProgress = newIndex / (mentoringItems.length - 1);
+    const targetProgress = newIndex / lastIndex;
     const targetScrollY = startScroll + targetProgress * totalScroll;
 
     window.scrollTo({
@@ -219,17 +227,11 @@ export default function SectionUnderstandMethod() {
 
       const firstChild = children[0] as HTMLElement;
       const gap = parseFloat(getComputedStyle(track).gap || '0');
-      const itemWidth = firstChild.getBoundingClientRect().width + gap;
+      const cardWidth = firstChild.getBoundingClientRect().width;
+      const itemWidth = cardWidth + gap;
 
       const styles = getComputedStyle(track);
       const padLeft = parseFloat(styles.paddingLeft || '0');
-
-      // Centro da tela
-      const screenCenter = window.innerWidth / 2;
-
-      // Posição inicial do primeiro card (centralizado por padding-left)
-      // Quando translate=0, primeiro card está em padLeft + itemWidth/2
-      // Queremos que o primeiro card fique no centro: já está ok com padLeft~45vw
 
       // Posição do último card quando translate=0:
       // padLeft + (numItems-1)*itemWidth + itemWidth/2 - gap/2
@@ -238,17 +240,24 @@ export default function SectionUnderstandMethod() {
         (numItems - 1) * itemWidth +
         firstChild.getBoundingClientRect().width / 2;
 
-      // Para centralizar o último card na tela + extra para ele ficar um pouco à esquerda do centro
-      const extraScroll = screenCenter * 0.4; // 40% extra para o card passar do centro
-      const targetTranslate =
-        screenCenter - lastCardCenterInitial - extraScroll; // valor negativo
+      // Mira o último card com ~100px da borda direita
+      const desiredRightMargin = 100;
+      const desiredLastCenter =
+        window.innerWidth - desiredRightMargin - cardWidth / 2;
+      const targetTranslate = desiredLastCenter - lastCardCenterInitial;
 
       const translate = progress * targetTranslate;
       track.style.transform = `translateX(${translate}px)`;
 
-      const effectiveMax = Math.abs(targetTranslate) || 1;
-      const current = Math.round((progress * effectiveMax) / itemWidth);
-      setActiveIndex(Math.max(0, Math.min(current, mentoringItems.length - 1)));
+      // Calcula o índice do card baseado no progresso linear (0 = primeiro, 1 = último)
+      const lastIndex = mentoringItems.length - 1;
+      const current = Math.round(progress * lastIndex);
+      const atEnd = progress >= 0.98; // considerar fim do scroll com pequena folga
+
+      setIsAtEnd(atEnd);
+      if (!atEnd) {
+        setActiveIndex(Math.max(0, Math.min(current, lastIndex)));
+      }
     };
 
     handleScroll();
@@ -336,14 +345,31 @@ export default function SectionUnderstandMethod() {
 
           {/* Carrossel em full width abaixo do título */}
           <div className='absolute inset-x-0 top-[35%] z-10'>
-            <div className='overflow-visible pb-32'>
+            <div className='overflow-visible pb-32 relative'>
+              {/* Névoa/fade lateral esquerda */}
+              <div
+                className='absolute left-0 top-0 bottom-0 w-[20vw] z-20 pointer-events-none'
+                style={{
+                  background:
+                    'linear-gradient(to right, rgba(198, 122, 91, 0.95) 0%, rgba(198, 122, 91, 0.7) 30%, rgba(198, 122, 91, 0) 100%)',
+                }}
+              />
+              {/* Névoa/fade lateral direita */}
+              <div
+                className='absolute right-0 top-0 bottom-0 w-[15vw] z-20 pointer-events-none'
+                style={{
+                  background:
+                    'linear-gradient(to left, rgba(198, 122, 91, 0.95) 0%, rgba(198, 122, 91, 0.7) 30%, rgba(198, 122, 91, 0) 100%)',
+                }}
+              />
+
               <div
                 ref={carouselRef}
                 className='flex gap-10 pb-8'
                 style={{
                   transition: 'transform 0.12s ease-out',
-                  paddingLeft: '45vw',
-                  paddingRight: '60vw',
+                  paddingLeft: '24vw',
+                  paddingRight: '8vw',
                 }}
               >
                 {mentoringItems.map((item, index) => (

@@ -52,7 +52,42 @@ export default function Services() {
   const prev = () => setCurrentIndex((prev) => (prev - 1 + total) % total);
 
   return (
-    <section className='py-20 bg-clinic-beige'>
+    <section className='py-20 bg-clinic-beige relative'>
+      {/* Névoa/fade lateral esquerda - na section para ir até as bordas da tela */}
+      <div
+        className='absolute left-0 top-0 bottom-0 w-[30%] z-30 pointer-events-none'
+        style={{
+          background:
+            'linear-gradient(to right, rgb(252, 248, 240) 0%, rgb(252, 248, 240) 30%, rgba(252, 248, 240, 0.7) 60%, rgba(252, 248, 240, 0) 100%)',
+        }}
+      />
+      {/* Névoa/fade lateral direita - na section para ir até as bordas da tela */}
+      <div
+        className='absolute right-0 top-0 bottom-0 w-[30%] z-30 pointer-events-none'
+        style={{
+          background:
+            'linear-gradient(to left, rgb(252, 248, 240) 0%, rgb(252, 248, 240) 30%, rgba(252, 248, 240, 0.7) 60%, rgba(252, 248, 240, 0) 100%)',
+        }}
+      />
+
+      {/* Overlay nav zones - positioned relative to section, extending to screen edges */}
+      <button
+        type='button'
+        onClick={prev}
+        aria-label='Serviço anterior'
+        className='group absolute top-0 bottom-0 left-0 w-[calc(50%-260px)] min-w-[60px] z-40 flex items-center justify-start pl-4 sm:pl-6 transition-all duration-300'
+      >
+        <ChevronLeft className='w-8 h-8 sm:w-9 sm:h-9 text-clinic-primary/50 transition group-hover:text-clinic-primary' />
+      </button>
+      <button
+        type='button'
+        onClick={next}
+        aria-label='Próximo serviço'
+        className='group absolute top-0 bottom-0 right-0 w-[calc(50%-260px)] min-w-[60px] z-40 flex items-center justify-end pr-4 sm:pr-6 transition-all duration-300'
+      >
+        <ChevronRight className='w-8 h-8 sm:w-9 sm:h-9 text-clinic-primary/50 transition group-hover:text-clinic-primary' />
+      </button>
+
       <div className='container mx-auto px-4'>
         <div className='text-center mb-16'>
           <h2 className="font-['Kurale'] text-4xl text-clinic-primary mb-4">
@@ -74,7 +109,7 @@ export default function Services() {
 
               const translate = offset * 26; // horizontal spacing between cards
               const scale = isActive ? 0.95 : isSide ? 0.88 : 0.8;
-              const opacity = isActive ? 1 : isSide ? 0.6 : 0.35;
+              const opacity = isActive ? 1 : isSide ? 0.8 : 0.5;
               const blur = isActive ? 'blur(0px)' : 'blur(0.5px)';
               const grayscale = isActive ? 'grayscale(0)' : 'grayscale(40%)';
               const zIndex = isActive ? 30 : isSide ? 20 : 10;
@@ -114,24 +149,6 @@ export default function Services() {
               );
             })}
           </div>
-
-          {/* Overlay nav zones (full-height, subtle, click-anywhere) */}
-          <button
-            type='button'
-            onClick={prev}
-            aria-label='Serviço anterior'
-            className='group absolute inset-y-0 left-[-14vw] sm:left-[-12vw] md:left-[-10vw] lg:left-[-8vw] w-[24vw] sm:w-[22vw] md:w-[20vw] lg:w-[18vw] xl:w-[16vw] z-40 flex items-center pl-3 sm:pl-4 pr-6 bg-gradient-to-r from-black/5 via-transparent to-transparent transition-all duration-300 hover:from-black/15 hover:via-black/8'
-          >
-            <ChevronLeft className='w-7 h-7 sm:w-8 sm:h-8 text-clinic-primary/70 transition group-hover:text-clinic-primary' />
-          </button>
-          <button
-            type='button'
-            onClick={next}
-            aria-label='Próximo serviço'
-            className='group absolute inset-y-0 right-[-14vw] sm:right-[-12vw] md:right-[-10vw] lg:right-[-8vw] w-[24vw] sm:w-[22vw] md:w-[20vw] lg:w-[18vw] xl:w-[16vw] z-40 flex items-center justify-end pr-3 sm:pr-4 pl-6 bg-gradient-to-l from-black/5 via-transparent to-transparent transition-all duration-300 hover:from-black/15 hover:via-black/8'
-          >
-            <ChevronRight className='w-7 h-7 sm:w-8 sm:h-8 text-clinic-primary/70 transition group-hover:text-clinic-primary' />
-          </button>
         </div>
       </div>
     </section>
