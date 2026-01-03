@@ -22,7 +22,7 @@ export default function Differentials() {
             </div>
           </div>
           <div className='order-1 lg:order-2'>
-            <h2 className="font-['Kurale'] text-4xl text-[#234A57] mb-6">
+            <h2 className="font-['Kurale'] text-4xl text-clinic-primary mb-6">
               Por que escolher a Clínica Menote?
             </h2>
             <p className='text-[#3c3b39] mb-8 leading-relaxed'>
@@ -36,7 +36,7 @@ export default function Differentials() {
                   key={item}
                   className='flex items-center gap-3 text-[#3c3b39]'
                 >
-                  <CheckCircle2 className='w-5 h-5 text-[#C67A5B]' />
+                  <CheckCircle2 className='w-5 h-5 text-clinic-gold' />
                   {item}
                 </li>
               ))}

@@ -28,11 +28,14 @@ export default function Header() {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
   return (
-    <header className='fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-[#fcf8f0]/20 shadow-sm'>
+    <header className='fixed w-full bg-white/90 backdrop-blur-md z-50 border-b border-clinic-beige shadow-sm'>
       <div className='container mx-auto px-4'>
         <div className='flex items-center justify-between h-20'>
           {/* Logo */}
-          <Link href='/' className="font-['Kurale'] text-2xl text-[#234A57]">
+          <Link
+            href='/'
+            className="font-['Kurale'] text-2xl text-clinic-primary"
+          >
             Clínica Menote
           </Link>
 
@@ -41,7 +44,7 @@ export default function Header() {
             {mainNavigation.map((item) => (
               <div key={item.label} className='relative group'>
                 {item.submenu ? (
-                  <button className='flex items-center gap-1 text-[#3c3b39] hover:text-[#C67A5B] transition-colors text-sm font-medium'>
+                  <button className='flex items-center gap-1 text-[#3c3b39] hover:text-clinic-primary transition-colors text-sm font-medium'>
                     {item.label}
                     <ChevronDown className='w-4 h-4' />
                   </button>
@@ -49,9 +52,9 @@ export default function Header() {
                   <Link
                     href={item.href}
                     className={cn(
-                      'text-sm font-medium transition-colors hover:text-[#C67A5B]',
+                      'text-sm font-medium transition-colors hover:text-clinic-primary',
                       item.highlight
-                        ? 'text-[#C67A5B] font-bold'
+                        ? 'text-clinic-primary font-bold'
                         : 'text-[#3c3b39]'
                     )}
                   >
@@ -67,7 +70,7 @@ export default function Header() {
                         <Link
                           key={subItem.href}
                           href={subItem.href}
-                          className='block px-4 py-2 text-sm text-[#3c3b39] hover:bg-[#fcf8f0] hover:text-[#C67A5B]'
+                          className='block px-4 py-2 text-sm text-[#3c3b39] hover:bg-clinic-beige hover:text-clinic-primary'
                         >
                           {subItem.label}
                         </Link>
@@ -82,7 +85,7 @@ export default function Header() {
               href='https://wa.me/5551997326916'
               target='_blank'
               rel='noopener noreferrer'
-              className='bg-[#C67A5B] text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#b06a4d] transition-colors'
+              className='bg-clinic-primary text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-clinic-primary/90 transition-colors'
             >
               Agendar Consulta
             </a>
@@ -90,7 +93,7 @@ export default function Header() {
 
           {/* Mobile Menu Button */}
           <button
-            className='md:hidden p-2 text-[#234A57]'
+            className='md:hidden p-2 text-clinic-primary'
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X /> : <Menu />}
@@ -123,12 +126,12 @@ export default function Header() {
                       />
                     </button>
                     {activeSubmenu === item.label && (
-                      <div className='pl-4 flex flex-col gap-2 mt-2 border-l-2 border-[#fcf8f0]'>
+                      <div className='pl-4 flex flex-col gap-2 mt-2 border-l-2 border-clinic-beige'>
                         {item.submenu.map((subItem) => (
                           <Link
                             key={subItem.href}
                             href={subItem.href}
-                            className='text-[#3c3b39] py-2 hover:text-[#C67A5B]'
+                            className='text-[#3c3b39] py-2 hover:text-clinic-primary'
                             onClick={() => setIsMenuOpen(false)}
                           >
                             {subItem.label}
@@ -142,7 +145,7 @@ export default function Header() {
                     href={item.href}
                     className={cn(
                       'block text-lg font-medium py-2',
-                      item.highlight ? 'text-[#C67A5B]' : 'text-[#3c3b39]'
+                      item.highlight ? 'text-clinic-primary' : 'text-[#3c3b39]'
                     )}
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -155,7 +158,7 @@ export default function Header() {
               href='https://wa.me/5551997326916'
               target='_blank'
               rel='noopener noreferrer'
-              className='bg-[#C67A5B] text-white text-center py-3 rounded-lg font-medium mt-4'
+              className='bg-clinic-primary text-white text-center py-3 rounded-lg font-medium mt-4 block'
               onClick={() => setIsMenuOpen(false)}
             >
               Agendar Consulta

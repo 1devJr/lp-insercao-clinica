@@ -25,10 +25,10 @@ const services = [
 
 export default function Services() {
   return (
-    <section className='py-20 bg-[#fcf8f0]'>
+    <section className='py-20 bg-clinic-beige'>
       <div className='container mx-auto px-4'>
         <div className='text-center mb-16'>
-          <h2 className="font-['Kurale'] text-4xl text-[#234A57] mb-4">
+          <h2 className="font-['Kurale'] text-4xl text-clinic-primary mb-4">
             Nossos Serviços
           </h2>
           <p className='text-[#3c3b39]'>
@@ -42,14 +42,14 @@ export default function Services() {
               key={service.title}
               className='bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow'
             >
-              <service.icon className='w-12 h-12 text-[#C67A5B] mb-6' />
-              <h3 className="font-['Kurale'] text-2xl text-[#234A57] mb-4">
+              <service.icon className='w-12 h-12 text-clinic-gold mb-6' />
+              <h3 className="font-['Kurale'] text-2xl text-clinic-primary mb-4">
                 {service.title}
               </h3>
               <p className='text-[#3c3b39] mb-6'>{service.description}</p>
               <a
                 href={service.title === 'Mentoria' ? '/mentoria' : '/servicos'}
-                className='text-[#C67A5B] font-medium hover:underline'
+                className='text-clinic-primary font-medium hover:underline'
               >
                 Saiba mais →
               </a>

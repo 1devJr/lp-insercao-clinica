@@ -4,7 +4,7 @@ import { Quote } from 'lucide-react';
 
 export default function Testimonials() {
   return (
-    <section className='py-20 bg-[#234A57] text-white'>
+    <section className='py-20 bg-clinic-primary text-white'>
       <div className='container mx-auto px-4'>
         <div className='text-center mb-16'>
           <h2 className="font-['Kurale'] text-4xl mb-4">
@@ -18,7 +18,7 @@ export default function Testimonials() {
               key={i}
               className='bg-white/10 p-8 rounded-2xl backdrop-blur-sm'
             >
-              <Quote className='w-8 h-8 text-[#C67A5B] mb-4' />
+              <Quote className='w-8 h-8 text-clinic-gold mb-4' />
               <p className='text-lg mb-6 opacity-90'>
                 "A clínica oferece um atendimento excepcional. Me senti acolhido
                 desde o primeiro momento. Recomendo muito!"

@@ -49,6 +49,11 @@ export default {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
+        clinic: {
+          primary: '#234A57', // Dark Teal (Brand Color)
+          gold: '#D4B498', // Gold/Beige (Accent from Logo)
+          beige: '#F5EFE6', // Light Beige (Background from Logo)
+        },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',

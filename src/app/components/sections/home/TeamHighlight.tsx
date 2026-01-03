@@ -2,10 +2,10 @@
 
 export default function TeamHighlight() {
   return (
-    <section className='py-20 bg-[#fcf8f0]'>
+    <section className='py-20 bg-clinic-beige'>
       <div className='container mx-auto px-4'>
         <div className='text-center mb-16'>
-          <h2 className="font-['Kurale'] text-4xl text-[#234A57] mb-4">
+          <h2 className="font-['Kurale'] text-4xl text-clinic-primary mb-4">
             Nossa Equipe
           </h2>
           <p className='text-[#3c3b39]'>
@@ -23,10 +23,10 @@ export default function TeamHighlight() {
                 [Foto Profissional {i}]
               </div>
               <div className='p-6 text-center'>
-                <h3 className="font-['Kurale'] text-xl text-[#234A57] mb-1">
+                <h3 className="font-['Kurale'] text-xl text-clinic-primary mb-1">
                   Nome do Profissional
                 </h3>
-                <p className='text-[#C67A5B] text-sm font-medium mb-3'>
+                <p className='text-clinic-primary text-sm font-medium mb-3'>
                   Psicólogo(a) - CRP 00/0000
                 </p>
                 <p className='text-[#3c3b39] text-sm'>

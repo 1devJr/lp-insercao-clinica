@@ -8,7 +8,7 @@ export default function BlogPreview() {
       <div className='container mx-auto px-4'>
         <div className='flex justify-between items-end mb-12'>
           <div>
-            <h2 className="font-['Kurale'] text-4xl text-[#234A57] mb-4">
+            <h2 className="font-['Kurale'] text-4xl text-clinic-primary mb-4">
               Blog
             </h2>
             <p className='text-[#3c3b39]'>
@@ -17,7 +17,7 @@ export default function BlogPreview() {
           </div>
           <Link
             href='/blog'
-            className='text-[#C67A5B] font-medium hover:underline hidden md:block'
+            className='text-clinic-primary font-medium hover:underline hidden md:block'
           >
             Ver todos os artigos →
           </Link>
@@ -31,12 +31,12 @@ export default function BlogPreview() {
                   [Imagem Artigo]
                 </div>
               </div>
-              <div className='flex gap-2 text-sm text-[#C67A5B] mb-2'>
+              <div className='flex gap-2 text-sm text-clinic-primary mb-2'>
                 <span>Psicologia</span>
                 <span>•</span>
                 <span>5 min de leitura</span>
               </div>
-              <h3 className="font-['Kurale'] text-xl text-[#234A57] mb-2 group-hover:text-[#C67A5B] transition-colors">
+              <h3 className="font-['Kurale'] text-xl text-clinic-primary mb-2 group-hover:text-clinic-gold transition-colors">
                 Título do Artigo sobre Saúde Mental {i}
               </h3>
               <p className='text-[#3c3b39] text-sm line-clamp-2'>
@@ -50,7 +50,7 @@ export default function BlogPreview() {
         <div className='mt-8 text-center md:hidden'>
           <Link
             href='/blog'
-            className='text-[#C67A5B] font-medium hover:underline'
+            className='text-clinic-primary font-medium hover:underline'
           >
             Ver todos os artigos →
           </Link>

@@ -13,7 +13,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className='bg-[#234A57] text-[#fcf8f0] pt-16 pb-8'>
+    <footer className='bg-clinic-primary text-clinic-beige pt-16 pb-8'>
       <div className='container mx-auto px-4'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12'>
           {/* Brand Column */}
@@ -33,14 +33,14 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-['Kurale'] text-xl mb-6 text-[#C67A5B]">
+            <h4 className="font-['Kurale'] text-xl mb-6 text-clinic-gold">
               Links Rápidos
             </h4>
             <ul className='space-y-3 text-sm'>
               <li>
                 <Link
                   href='/'
-                  className='hover:text-[#C67A5B] transition-colors'
+                  className='hover:text-clinic-gold transition-colors'
                 >
                   Início
                 </Link>
@@ -48,7 +48,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/sobre'
-                  className='hover:text-[#C67A5B] transition-colors'
+                  className='hover:text-clinic-gold transition-colors'
                 >
                   Sobre Nós
                 </Link>
@@ -56,7 +56,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/servicos'
-                  className='hover:text-[#C67A5B] transition-colors'
+                  className='hover:text-clinic-gold transition-colors'
                 >
                   Serviços
                 </Link>
@@ -64,7 +64,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/equipe'
-                  className='hover:text-[#C67A5B] transition-colors'
+                  className='hover:text-clinic-gold transition-colors'
                 >
                   Equipe
                 </Link>
@@ -72,7 +72,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/blog'
-                  className='hover:text-[#C67A5B] transition-colors'
+                  className='hover:text-clinic-gold transition-colors'
                 >
                   Blog
                 </Link>
@@ -80,7 +80,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/contato'
-                  className='hover:text-[#C67A5B] transition-colors'
+                  className='hover:text-clinic-gold transition-colors'
                 >
                   Contato
                 </Link>
@@ -88,7 +88,7 @@ export default function Footer() {
               <li>
                 <Link
                   href='/mentoria'
-                  className='hover:text-[#C67A5B] transition-colors'
+                  className='hover:text-clinic-gold transition-colors'
                 >
                   Mentoria
                 </Link>
@@ -98,12 +98,12 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-['Kurale'] text-xl mb-6 text-[#C67A5B]">
+            <h4 className="font-['Kurale'] text-xl mb-6 text-clinic-gold">
               Contato
             </h4>
             <ul className='space-y-4 text-sm'>
               <li className='flex items-start gap-3'>
-                <MapPin className='w-5 h-5 text-[#C67A5B] shrink-0 mt-0.5' />
+                <MapPin className='w-5 h-5 text-clinic-gold shrink-0 mt-0.5' />
                 <span>
                   Av. Carlos Gomes, 123 - Sala 405
                   <br />
@@ -111,11 +111,11 @@ export default function Footer() {
                 </span>
               </li>
               <li className='flex items-center gap-3'>
-                <Phone className='w-5 h-5 text-[#C67A5B] shrink-0' />
+                <Phone className='w-5 h-5 text-clinic-gold shrink-0' />
                 <span>(51) 99732-6916</span>
               </li>
               <li className='flex items-center gap-3'>
-                <MessageCircle className='w-5 h-5 text-[#C67A5B] shrink-0' />
+                <MessageCircle className='w-5 h-5 text-clinic-gold shrink-0' />
                 <span>(51) 99732-6916</span>
               </li>
             </ul>
@@ -123,7 +123,7 @@ export default function Footer() {
 
           {/* Social */}
           <div>
-            <h4 className="font-['Kurale'] text-xl mb-6 text-[#C67A5B]">
+            <h4 className="font-['Kurale'] text-xl mb-6 text-clinic-gold">
               Redes Sociais
             </h4>
             <div className='flex gap-4'>
@@ -131,7 +131,7 @@ export default function Footer() {
                 href='https://instagram.com/clinicamenote'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='bg-[#fcf8f0]/10 p-3 rounded-full hover:bg-[#C67A5B] transition-colors'
+                className='bg-clinic-beige/10 p-3 rounded-full hover:bg-clinic-gold transition-colors'
               >
                 <Instagram className='w-5 h-5' />
               </a>
@@ -139,7 +139,7 @@ export default function Footer() {
                 href='https://linkedin.com/company/clinicamenote'
                 target='_blank'
                 rel='noopener noreferrer'
-                className='bg-[#fcf8f0]/10 p-3 rounded-full hover:bg-[#C67A5B] transition-colors'
+                className='bg-clinic-beige/10 p-3 rounded-full hover:bg-clinic-gold transition-colors'
               >
                 <Linkedin className='w-5 h-5' />
               </a>
@@ -159,7 +159,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className='border-t border-[#fcf8f0]/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-70'>
+        <div className='border-t border-clinic-beige/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm opacity-70'>
           <p>© {currentYear} Clínica Menote. Todos os direitos reservados.</p>
           <div className='flex gap-6'>
             <Link href='/termos-de-uso' className='hover:text-white'>
