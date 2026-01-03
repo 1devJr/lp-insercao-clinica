@@ -16,6 +16,12 @@ const mainNavigation = [
     submenu: [
       { label: 'Psicologia', href: '/servicos/psicologia' },
       { label: 'Psiquiatria', href: '/servicos/psiquiatria' },
+      {
+        label: 'Projeto Saúde Mental para Todos',
+        href: '/servicos/projeto-saude-mental',
+      },
+      { label: 'Cursos', href: '/servicos/cursos' },
+      { label: 'Mentoria Inserção na Clínica', href: '/mentoria' },
     ],
   },
   { label: 'Equipe', href: '/equipe' },

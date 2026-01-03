@@ -1,6 +1,7 @@
 'use client';
 
 import { CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
 
 const differentials = [
   'Atendimento Humanizado',
@@ -17,9 +18,13 @@ export default function Differentials() {
       <div className='container mx-auto px-4'>
         <div className='grid lg:grid-cols-2 gap-12 items-center'>
           <div className='relative h-[400px] rounded-2xl overflow-hidden bg-gray-200 order-2 lg:order-1'>
-            <div className='absolute inset-0 flex items-center justify-center text-gray-400 p-8 text-center'>
-              [Imagem: Foto do consultório ou ambiente]
-            </div>
+            <Image
+              src='/images/equipe.jpg'
+              alt='Equipe Clínica Menote'
+              fill
+              className='object-cover'
+              priority
+            />
           </div>
           <div className='order-1 lg:order-2'>
             <h2 className="font-['Kurale'] text-4xl text-clinic-primary mb-6">

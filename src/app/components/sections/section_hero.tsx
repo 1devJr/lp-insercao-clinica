@@ -21,6 +21,15 @@ export default function SectionHero() {
   return (
     <>
       <section className='section-hero relative'>
+        <video
+          className='hero-video'
+          src='/IMG_2613.MOV'
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden
+        />
         <div className='container mx-auto flex flex-col items-start justify-end h-screen relative px-4 pb-20 md:pb-0'>
           <div className='flex flex-col gap-12 mb-auto mt-auto md:mb-0 md:mt-0 md:absolute md:bottom-60'>
             <h1 className='title text-5xl sm:text-6xl md:text-7xl font-serif font-normal max-w-4xl leading-tight'>

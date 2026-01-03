@@ -1,27 +1,32 @@
 .section-hero {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: #fff;
-  /* ORIGINAL   */
-  /* background-image: url('/images/Background\ Image.png');
-  background-blend-mode: multiply;
-  background-color: rgba(0, 0, 0, 0.4);
-  background-position: center;
-  background-size: cover;
-  position: relative; */
-  /* coloque o nome correto do arquivo */
+  overflow: hidden;
+  background: #0f4f65; /* fallback color from brand/hero video */
+}
 
-  /* #C67A5B com 40% */
-  background-image: url('/images/Background Image.png');
-  background-color: rgba(198, 122, 91, 0.4);
-  background-blend-mode: multiply;
+.section-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
 
-  background-position: 50% 50%;
-  background-size: cover;
-  background-repeat: no-repeat;
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
 }

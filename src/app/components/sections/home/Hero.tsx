@@ -1,8 +1,33 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useRef } from 'react';
 
 export default function Hero() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.playbackRate = 0.5; // stronger slow-motion feel
+
+    const skipFirstSecond = () => {
+      if (video.currentTime < 1) {
+        video.currentTime = 1;
+      }
+      void video.play().catch(() => {
+        /* autoplay might be blocked; safe to ignore */
+      });
+    };
+
+    video.addEventListener('loadedmetadata', skipFirstSecond);
+
+    return () => {
+      video.removeEventListener('loadedmetadata', skipFirstSecond);
+    };
+  }, []);
+
   return (
     <section className='relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-clinic-beige'>
       <div className='container mx-auto px-4'>
@@ -33,10 +58,19 @@ export default function Hero() {
             </div>
           </div>
           <div className='relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden bg-gray-200'>
-            {/* Placeholder for Hero Image */}
-            <div className='absolute inset-0 flex items-center justify-center text-gray-400 p-8 text-center'>
-              [Imagem Hero: Foto acolhedora da clínica ou profissional]
-            </div>
+            <video
+              ref={videoRef}
+              className='absolute inset-0 w-full h-full object-cover'
+              src='/IMG_2613.MOV'
+              autoPlay
+              muted
+              loop
+              playsInline
+              suppressHydrationWarning
+              data-no-vsc
+              aria-label='Vídeo institucional da clínica'
+            />
+            <div className='absolute inset-0 bg-gradient-to-b from-black/25 to-black/45' />
           </div>
         </div>
       </div>
