@@ -1,6 +1,7 @@
 'use client';
 
 import { ChevronDown, Menu, X } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -32,11 +33,18 @@ export default function Header() {
       <div className='container mx-auto px-4'>
         <div className='flex items-center justify-between h-20'>
           {/* Logo */}
-          <Link
-            href='/'
-            className="font-['Kurale'] text-2xl text-clinic-primary"
-          >
-            Clínica Menote
+          <Link href='/' className='flex items-center gap-3 group'>
+            <div className='relative w-10 h-10 rounded-full overflow-hidden border border-clinic-beige group-hover:border-clinic-primary transition-colors'>
+              <Image
+                src='/images/logo-header.png'
+                alt='Logo Clínica Menote'
+                fill
+                className='object-cover'
+              />
+            </div>
+            <span className="font-['Kurale'] text-2xl text-clinic-primary">
+              Clínica Menote
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
