@@ -1,9 +1,8 @@
 import {
-  Facebook,
   Instagram,
   Linkedin,
-  Mail,
   MapPin,
+  MessageCircle,
   Phone,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -23,9 +22,9 @@ export default function SectionFooter() {
               proporcionar acolhimento e transformação através da psicologia.
             </p>
             <div className='pt-4'>
-              <p className='text-xs opacity-75'>CRP 00/00000</p>
+              <p className='text-xs opacity-75'>CRP 07/26202</p>
               <p className='text-xs opacity-75'>
-                Responsável Técnica: Dra. Nome Sobrenome
+                Responsável técnica: Psicóloga Nicole Menote
               </p>
             </div>
           </div>
@@ -108,48 +107,56 @@ export default function SectionFooter() {
                   <br />
                   Porto Alegre - RS
                   <br />
-                  Atendimento Online para todo Brasil
+                  Atendimento presencial para Porto Alegre e região. Online para
+                  todo brasil.
                 </span>
               </li>
               <li className='flex items-center gap-3'>
                 <Phone className='w-5 h-5 text-[#C67A5B] shrink-0' />
-                <a
-                  href='https://wa.me/5551999999999'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='hover:text-[#C67A5B] transition-colors'
-                >
-                  (51) 99999-9999
-                </a>
-              </li>
-              <li className='flex items-center gap-3'>
-                <Mail className='w-5 h-5 text-[#C67A5B] shrink-0' />
-                <a
-                  href='mailto:contato@clinicamenote.com.br'
-                  className='hover:text-[#C67A5B] transition-colors'
-                >
-                  contato@clinicamenote.com.br
-                </a>
+                <div className='flex flex-col'>
+                  <a
+                    href='https://wa.me/5551997326916'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='hover:text-[#C67A5B] transition-colors'
+                  >
+                    (51) 99732-6916
+                  </a>
+                  <a
+                    href='https://wa.me/5551999977486'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='hover:text-[#C67A5B] transition-colors'
+                  >
+                    (51) 99997-7486
+                  </a>
+                </div>
               </li>
             </ul>
             <div className='flex gap-4 mt-6'>
               <a
-                href='#'
+                href='https://www.instagram.com/clinicamenote?igsh=MW9jZjg4MDJ6cHY5MA=='
+                target='_blank'
+                rel='noopener noreferrer'
                 className='bg-[#fcf8f0]/10 p-2 rounded-full hover:bg-[#C67A5B] transition-colors'
               >
                 <Instagram className='w-5 h-5' />
               </a>
               <a
-                href='#'
+                href='https://www.linkedin.com/company/cl%C3%ADnica-menote-psicologia-e-psiquiatria/'
+                target='_blank'
+                rel='noopener noreferrer'
                 className='bg-[#fcf8f0]/10 p-2 rounded-full hover:bg-[#C67A5B] transition-colors'
               >
                 <Linkedin className='w-5 h-5' />
               </a>
               <a
-                href='#'
+                href='https://wa.me/5551997326916'
+                target='_blank'
+                rel='noopener noreferrer'
                 className='bg-[#fcf8f0]/10 p-2 rounded-full hover:bg-[#C67A5B] transition-colors'
               >
-                <Facebook className='w-5 h-5' />
+                <MessageCircle className='w-5 h-5' />
               </a>
             </div>
           </div>
