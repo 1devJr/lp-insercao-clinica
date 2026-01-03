@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 
+import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 
 import AboutQuick from '@/app/components/sections/home/AboutQuick';
@@ -11,7 +12,6 @@ import Hero from '@/app/components/sections/home/Hero';
 import Services from '@/app/components/sections/home/Services';
 import TeamHighlight from '@/app/components/sections/home/TeamHighlight';
 import Testimonials from '@/app/components/sections/home/Testimonials';
-import SectionFooter from '@/app/components/sections/section_footer';
 
 export default function HomePage() {
   return (
@@ -24,7 +24,7 @@ export default function HomePage() {
       <TeamHighlight />
       <Testimonials />
       <BlogPreview />
-      <SectionFooter />
+      <Footer />
     </main>
   );
 }

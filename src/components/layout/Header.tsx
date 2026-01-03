@@ -78,12 +78,14 @@ export default function Header() {
               </div>
             ))}
 
-            <Link
-              href='/agendar'
+            <a
+              href='https://wa.me/5551997326916'
+              target='_blank'
+              rel='noopener noreferrer'
               className='bg-[#C67A5B] text-white px-6 py-2.5 rounded-full text-sm font-medium hover:bg-[#b06a4d] transition-colors'
             >
               Agendar Consulta
-            </Link>
+            </a>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -149,13 +151,15 @@ export default function Header() {
                 )}
               </div>
             ))}
-            <Link
-              href='/agendar'
+            <a
+              href='https://wa.me/5551997326916'
+              target='_blank'
+              rel='noopener noreferrer'
               className='bg-[#C67A5B] text-white text-center py-3 rounded-lg font-medium mt-4'
               onClick={() => setIsMenuOpen(false)}
             >
               Agendar Consulta
-            </Link>
+            </a>
           </div>
         </div>
       )}

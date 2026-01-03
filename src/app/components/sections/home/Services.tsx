@@ -48,7 +48,7 @@ export default function Services() {
               </h3>
               <p className='text-[#3c3b39] mb-6'>{service.description}</p>
               <a
-                href='#'
+                href={service.title === 'Mentoria' ? '/mentoria' : '/servicos'}
                 className='text-[#C67A5B] font-medium hover:underline'
               >
                 Saiba mais →

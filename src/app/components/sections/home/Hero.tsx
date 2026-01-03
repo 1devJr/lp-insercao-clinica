@@ -16,12 +16,14 @@ export default function Hero() {
               jornada de transformação começa aqui.
             </p>
             <div className='flex flex-col sm:flex-row gap-4'>
-              <Link
-                href='/agendar'
+              <a
+                href='https://wa.me/5551997326916'
+                target='_blank'
+                rel='noopener noreferrer'
                 className='bg-[#C67A5B] text-white px-8 py-4 rounded-full text-center font-medium hover:bg-[#b06a4d] transition-colors'
               >
                 Agendar Consulta
-              </Link>
+              </a>
               <Link
                 href='/sobre'
                 className='border-2 border-[#234A57] text-[#234A57] px-8 py-4 rounded-full text-center font-medium hover:bg-[#234A57] hover:text-white transition-colors'
