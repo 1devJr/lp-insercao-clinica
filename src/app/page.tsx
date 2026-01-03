@@ -1,50 +1,30 @@
 'use client';
 
-import Head from 'next/head';
 import * as React from 'react';
-import '@/lib/env';
 
-import SectionCronograma from './components/sections/section_cronograma';
-import SectionFooter from './components/sections/section_footer';
-import SectionHero from './components/sections/section_hero';
-import SectionMentoring from './components/sections/section_mentoring';
-import SectionSubscription from './components/sections/section_subscription';
-import SectionUnderstandMethod from './components/sections/section_understand-method';
+import Header from '@/components/layout/Header';
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
+import AboutQuick from '@/app/components/sections/home/AboutQuick';
+import BlogPreview from '@/app/components/sections/home/BlogPreview';
+import Differentials from '@/app/components/sections/home/Differentials';
+import Hero from '@/app/components/sections/home/Hero';
+import Services from '@/app/components/sections/home/Services';
+import TeamHighlight from '@/app/components/sections/home/TeamHighlight';
+import Testimonials from '@/app/components/sections/home/Testimonials';
+import SectionFooter from '@/app/components/sections/section_footer';
 
 export default function HomePage() {
   return (
-    <main>
-      <Head>
-        <title>
-          Clinica Menote - Saúde mental com afeto, vínculo e excelência.
-        </title>
-      </Head>
-      <section className='bg-white'>
-        <SectionHero></SectionHero>
-        <SectionMentoring></SectionMentoring>
-        <SectionUnderstandMethod></SectionUnderstandMethod>
-        <SectionCronograma></SectionCronograma>
-        <SectionSubscription></SectionSubscription>
-        <SectionFooter></SectionFooter>
-        {/* <footer className='absolute bottom-2 text-gray-700'>
-            © {new Date().getFullYear()} By{' '}
-            <UnderlineLink href='https://github.com/1devjr' target='_blank'>
-             Criado por 1devJr
-            </UnderlineLink>
-          </footer> */}
-      </section>
+    <main className='min-h-screen bg-white'>
+      <Header />
+      <Hero />
+      <AboutQuick />
+      <Services />
+      <Differentials />
+      <TeamHighlight />
+      <Testimonials />
+      <BlogPreview />
+      <SectionFooter />
     </main>
   );
 }
