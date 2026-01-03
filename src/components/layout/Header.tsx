@@ -29,17 +29,17 @@ export default function Header() {
   const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
 
   return (
-    <header className='fixed w-full bg-clinic-primary/95 backdrop-blur-md z-50 border-b border-clinic-gold/20 shadow-sm'>
+    <header className='fixed w-full bg-clinic-primary z-50 border-b border-clinic-gold/20 shadow-sm'>
       <div className='container mx-auto px-4'>
         <div className='flex items-center justify-between h-20'>
           {/* Logo */}
-          <Link href='/' className='flex items-center gap-3 group'>
-            <div className='relative w-10 h-10 rounded-full overflow-hidden border border-clinic-gold/30 group-hover:border-clinic-gold transition-colors'>
+          <Link href='/' className='flex items-center gap-2 group'>
+            <div className='relative w-12 h-12'>
               <Image
                 src='/images/logo-header.png'
                 alt='Logo Clínica Menote'
                 fill
-                className='object-cover'
+                className='object-contain'
               />
             </div>
             <span className="font-['Kurale'] text-2xl text-white group-hover:text-clinic-gold transition-colors">
