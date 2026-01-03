@@ -50,7 +50,7 @@ export default {
           foreground: 'hsl(var(--accent-foreground))',
         },
         clinic: {
-          primary: '#234A57', // Dark Teal (Brand Color)
+          primary: '#0f4f65', // Dark Teal from logo background
           gold: '#D4B498', // Gold/Beige (Accent from Logo)
           beige: '#F5EFE6', // Light Beige (Background from Logo)
         },
