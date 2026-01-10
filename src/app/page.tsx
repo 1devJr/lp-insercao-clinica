@@ -6,12 +6,10 @@ import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 
 import AboutQuick from '@/app/components/sections/home/AboutQuick';
-import BlogPreview from '@/app/components/sections/home/BlogPreview';
 import Differentials from '@/app/components/sections/home/Differentials';
 import Hero from '@/app/components/sections/home/Hero';
 import Services from '@/app/components/sections/home/Services';
 import TeamHighlight from '@/app/components/sections/home/TeamHighlight';
-import Testimonials from '@/app/components/sections/home/Testimonials';
 
 export default function HomePage() {
   return (
@@ -22,8 +20,8 @@ export default function HomePage() {
       <Services />
       <Differentials />
       <TeamHighlight />
-      <Testimonials />
-      <BlogPreview />
+      {/* <Testimonials /> */}
+      {/* <BlogPreview /> */}
       <Footer />
     </main>
   );

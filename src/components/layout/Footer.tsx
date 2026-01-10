@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  Instagram,
-  Linkedin,
-  MapPin,
-  MessageCircle,
-  Phone,
-} from 'lucide-react';
+import { Instagram, Linkedin, MapPin, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -23,12 +17,6 @@ export default function Footer() {
               Saúde mental com afeto, vínculo e excelência. Nossa missão é
               proporcionar acolhimento e transformação através da psicologia.
             </p>
-            <div className='pt-4'>
-              <p className='text-xs opacity-75'>CRP 07/26202</p>
-              <p className='text-xs opacity-75'>
-                Responsável técnica: Psicóloga Nicole Menote
-              </p>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -105,18 +93,34 @@ export default function Footer() {
               <li className='flex items-start gap-3'>
                 <MapPin className='w-5 h-5 text-clinic-gold shrink-0 mt-0.5' />
                 <span>
-                  Av. Carlos Gomes, 123 - Sala 405
-                  <br />
-                  Auxiliadora, Porto Alegre - RS
+                  Medplex Santana Torre Sul, Sala 1006 - Porto Alegre - RS
+                  <br></br>
+                  <br></br>
+                  Atendimento presencial para Porto Alegre e região.<br></br>{' '}
+                  Online para todo brasil.
                 </span>
               </li>
               <li className='flex items-center gap-3'>
-                <Phone className='w-5 h-5 text-clinic-gold shrink-0' />
-                <span>(51) 99732-6916</span>
+                <MessageCircle className='w-5 h-5 text-clinic-gold shrink-0' />
+                <a
+                  href='https://wa.me/5551999777486'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='hover:text-clinic-gold transition-colors'
+                >
+                  (51) 99977-7486
+                </a>
               </li>
               <li className='flex items-center gap-3'>
                 <MessageCircle className='w-5 h-5 text-clinic-gold shrink-0' />
-                <span>(51) 99732-6916</span>
+                <a
+                  href='https://wa.me/5551997326916'
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='hover:text-clinic-gold transition-colors'
+                >
+                  (51) 99732-6916
+                </a>
               </li>
             </ul>
           </div>
@@ -136,7 +140,7 @@ export default function Footer() {
                 <Instagram className='w-5 h-5' />
               </a>
               <a
-                href='https://linkedin.com/company/clinicamenote'
+                href='https://www.linkedin.com/company/cl%C3%ADnica-menote-psicologia-e-psiquiatria/'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='bg-clinic-beige/10 p-3 rounded-full hover:bg-clinic-gold transition-colors'
@@ -146,7 +150,7 @@ export default function Footer() {
             </div>
             <div className='mt-8'>
               <a
-                href='https://wa.me/5551997326916'
+                href='https://wa.me/5551999777486'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white px-6 py-3 rounded-full font-medium transition-colors'

@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 
 export default function Hero() {
@@ -40,21 +39,21 @@ export default function Hero() {
               Acolhimento humanizado e tratamentos baseados em evidências. Sua
               jornada de transformação começa aqui.
             </p>
-            <div className='flex flex-col sm:flex-row gap-4'>
+            <div className='flex flex-col sm:flex-row justify-center gap-4'>
               <a
-                href='https://wa.me/5551997326916'
+                href='https://wa.me/5551999977486'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='bg-clinic-primary text-white px-8 py-4 rounded-full text-center font-medium hover:bg-clinic-primary/90 transition-colors'
               >
                 Agendar Consulta
               </a>
-              <Link
+              {/* <Link
                 href='/sobre'
                 className='border-2 border-clinic-primary text-clinic-primary px-8 py-4 rounded-full text-center font-medium hover:bg-clinic-primary hover:text-white transition-colors'
               >
                 Conheça a Clínica
-              </Link>
+              </Link> */}
             </div>
           </div>
           <div className='relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden bg-gray-200'>

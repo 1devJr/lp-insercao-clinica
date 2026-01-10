@@ -4,8 +4,8 @@ import { CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 
 const differentials = [
-  'Atendimento Humanizado',
-  'Profissionais Especializados',
+  'Atendimento Singular e Humanizado',
+  'Profissionais Qualificados',
   'Ambiente Acolhedor',
   'Abordagem Baseada em Evidências',
   'Localização Privilegiada',
@@ -39,10 +39,10 @@ export default function Differentials() {
               {differentials.map((item) => (
                 <li
                   key={item}
-                  className='flex items-center gap-3 text-[#3c3b39]'
+                  className='flex items-center gap-3 text-[#3c3b39] bg-clinic-beige/30 rounded-lg px-4 py-3 min-h-[52px]'
                 >
-                  <CheckCircle2 className='w-5 h-5 text-clinic-gold' />
-                  {item}
+                  <CheckCircle2 className='w-5 h-5 text-clinic-gold shrink-0' />
+                  <span className='text-sm'>{item}</span>
                 </li>
               ))}
             </ul>

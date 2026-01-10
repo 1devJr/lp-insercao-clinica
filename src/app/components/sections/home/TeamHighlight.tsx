@@ -5,7 +5,7 @@ import Image from 'next/image';
 const team = [
   {
     name: 'Nicole Menote',
-    role: 'Psicóloga CRP07/26202',
+    role: 'Psicóloga CRP 07/26202',
     bio: 'Especialista em Terapia Cognitivo-Comportamental e Avaliação Neuropsicológica; formada em Terapia do Esquema.',
     photo: '/images/nicole.jpg',
   },
@@ -23,10 +23,10 @@ export default function TeamHighlight() {
       <div className='container mx-auto px-4'>
         <div className='text-center mb-16'>
           <h2 className="font-['Kurale'] text-4xl text-clinic-primary mb-4">
-            Nossa Equipe
+            Responsáveis Técnicas
           </h2>
           <p className='text-[#3c3b39]'>
-            Conheça os profissionais que cuidarão de você
+            Conheça as sócias fundadoras que idealizaram este espaço de cuidado
           </p>
         </div>
 
