@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Instagram,
   Linkedin,
@@ -9,6 +11,18 @@ import Link from 'next/link';
 
 export default function SectionFooter() {
   const currentYear = new Date().getFullYear();
+
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const absoluteTop = window.scrollY + rect.top;
+      window.scrollTo({
+        top: absoluteTop,
+        behavior: 'smooth',
+      });
+    }
+  };
 
   return (
     <footer className='bg-[#234A57] text-[#fcf8f0] pt-16 pb-8'>
@@ -34,48 +48,50 @@ export default function SectionFooter() {
             <h4 className='font-primary text-xl mb-6 text-[#C67A5B]'>
               Links Rápidos
             </h4>
-            <ul className='space-y-3 text-sm'>
+            <ul className='grid grid-cols-2 md:grid-cols-1 gap-x-4 gap-y-3 text-sm'>
               <li>
-                <Link
-                  href='/'
-                  className='hover:text-[#C67A5B] transition-colors'
+                <button
+                  onClick={() =>
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }
+                  className='hover:text-[#C67A5B] transition-colors text-left'
                 >
                   Início
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href='#sobre'
-                  className='hover:text-[#C67A5B] transition-colors'
+                <button
+                  onClick={() => scrollToSection('sobre')}
+                  className='hover:text-[#C67A5B] transition-colors text-left'
                 >
                   Sobre Nós
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href='#metodo'
-                  className='hover:text-[#C67A5B] transition-colors'
+                <button
+                  onClick={() => scrollToSection('metodo')}
+                  className='hover:text-[#C67A5B] transition-colors text-left'
                 >
                   Nossa Metodologia
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href='#cronograma'
-                  className='hover:text-[#C67A5B] transition-colors'
+                <button
+                  onClick={() => scrollToSection('cronograma')}
+                  className='hover:text-[#C67A5B] transition-colors text-left'
                 >
                   Cronograma
-                </Link>
+                </button>
               </li>
               <li>
-                <Link
-                  href='#subscription-form'
-                  className='hover:text-[#C67A5B] transition-colors'
+                <button
+                  onClick={() => scrollToSection('subscription-form')}
+                  className='hover:text-[#C67A5B] transition-colors text-left'
                 >
-                  Agendar Consulta
-                </Link>
+                  Inscreva-se
+                </button>
               </li>
-              <li className='pt-2'>
+              <li>
                 <Link
                   href='/termos-de-uso'
                   className='hover:text-[#C67A5B] transition-colors'

@@ -60,15 +60,18 @@ export default function Hero() {
             <video
               ref={videoRef}
               className='absolute inset-0 w-full h-full object-cover'
-              src='/IMG_2613.MOV'
               autoPlay
               muted
               loop
               playsInline
-              suppressHydrationWarning
-              data-no-vsc
+              preload='metadata'
+              poster='/images/og.webp'
               aria-label='Vídeo institucional da clínica'
-            />
+            >
+              <source src='/video.webm' type='video/webm' />
+              <source src='/video.mp4' type='video/mp4' />
+              <source src='/IMG_2613.MOV' type='video/quicktime' />
+            </video>
             <div className='absolute inset-0 bg-gradient-to-b from-black/25 to-black/45' />
           </div>
         </div>

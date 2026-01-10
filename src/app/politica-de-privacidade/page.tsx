@@ -1,21 +1,31 @@
 'use client';
 
 import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import SectionFooter from '../components/sections/section_footer';
 
 export default function PoliticaDePrivacidadePage() {
+  const router = useRouter();
+
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
     <main className='bg-[#FCF8F0] min-h-screen flex flex-col'>
       <div className='container mx-auto px-4 py-12 flex-grow'>
-        <Link
-          href='/#subscription-form'
+        <button
+          onClick={handleBack}
           className='inline-flex items-center gap-2 text-[#234A57] hover:text-[#C67A5B] transition-colors mb-8 font-medium'
         >
           <ArrowLeft className='w-4 h-4' />
           Voltar
-        </Link>
+        </button>
 
         <article className='max-w-4xl mx-auto bg-white rounded-2xl p-8 md:p-12 shadow-sm'>
           <h1 className="font-['Kurale',serif] text-4xl md:text-5xl text-[#234A57] mb-8 tracking-tight">

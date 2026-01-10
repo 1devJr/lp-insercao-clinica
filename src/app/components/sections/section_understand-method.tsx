@@ -273,9 +273,10 @@ export default function SectionUnderstandMethod() {
     <>
       {/* Versão MOBILE - Cards empilhados verticalmente */}
       <div
+        id='metodo'
         className='md:hidden section-mentoring relative py-16 px-6'
         style={{
-          backgroundImage: "url('/images/BackgroundTerracota.png')",
+          backgroundImage: "url('/images/BackgroundTerracota.webp')",
         }}
       >
         <div className='absolute inset-0 bg-[#C67A5B]/85' />
@@ -317,7 +318,7 @@ export default function SectionUnderstandMethod() {
         ref={sectionRef}
         className='hidden md:block section-mentoring relative'
         style={{
-          backgroundImage: "url('/images/BackgroundTerracota.png')",
+          backgroundImage: "url('/images/BackgroundTerracota.webp')",
           height: `${mentoringItems.length * 120}vh`,
         }}
       >

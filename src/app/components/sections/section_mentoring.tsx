@@ -114,7 +114,7 @@ export default function SectionMentoring() {
 
   return (
     <>
-      <div className='section-mentoring  bg-[#FCF8F0] relative p-10'>
+      <div id='sobre' className='section-mentoring  bg-[#FCF8F0] relative p-10'>
         {/* Titulo que ocupa 100% da tela e com um traço embaixo */}
         <div className='w-full flex justify-center items-center flex-col'>
           <h1 className='text-4xl md:text-5xl font-bold text-black text-center'>

@@ -19,7 +19,7 @@ export default function Differentials() {
         <div className='grid lg:grid-cols-2 gap-12 items-center'>
           <div className='relative h-[400px] rounded-2xl overflow-hidden bg-gray-200 order-2 lg:order-1'>
             <Image
-              src='/images/equipe.jpg'
+              src='/images/equipe.webp'
               alt='Equipe Clínica Menote'
               fill
               className='object-cover'

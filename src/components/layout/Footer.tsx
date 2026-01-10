@@ -24,7 +24,7 @@ export default function Footer() {
             <h4 className="font-['Kurale'] text-xl mb-6 text-clinic-gold">
               Links Rápidos
             </h4>
-            <ul className='space-y-3 text-sm'>
+            <ul className='grid grid-cols-2 md:grid-cols-1 gap-x-4 gap-y-3 text-sm'>
               <li>
                 <Link
                   href='/'

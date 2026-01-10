@@ -42,7 +42,7 @@ export default function Header() {
           <Link href='/' className='flex items-center gap-2 group'>
             <div className='relative w-12 h-12'>
               <Image
-                src='/images/LogoClinicaSemTexto.jpeg'
+                src='/images/LogoClinicaSemTexto.webp'
                 alt='Logo Clínica Menote'
                 fill
                 className='object-contain'

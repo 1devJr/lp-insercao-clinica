@@ -371,7 +371,10 @@ export default function SectionCronograma() {
   };
 
   return (
-    <section className='bg-[#FCF8F0] relative py-20 px-4 overflow-hidden'>
+    <section
+      id='cronograma'
+      className='bg-[#FCF8F0] relative py-20 px-4 overflow-hidden'
+    >
       {/* Header */}
       <div className='max-w-4xl mx-auto text-center mb-16'>
         <h2 className="font-['Kurale',serif] text-6xl md:text-7xl text-[#2a2928] mb-4 tracking-tight">

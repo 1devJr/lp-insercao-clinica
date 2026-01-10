@@ -7,13 +7,13 @@ const team = [
     name: 'Nicole Menote',
     role: 'Psicóloga CRP 07/26202',
     bio: 'Especialista em Terapia Cognitivo-Comportamental e Avaliação Neuropsicológica; formada em Terapia do Esquema.',
-    photo: '/images/nicole.jpg',
+    photo: '/images/nicole.webp',
   },
   {
     name: 'Daianna Menote',
     role: 'Psiquiatra CRM-RS 38303 (RQE 34960)',
     bio: 'Especialista em Terapia Cognitivo-Comportamental e formada em Terapia do Esquema.',
-    photo: '/images/daiana.jpg',
+    photo: '/images/daiana.webp',
   },
 ];
 
