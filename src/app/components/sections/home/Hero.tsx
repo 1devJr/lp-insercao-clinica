@@ -1,29 +1,32 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+import Skeleton from '@/components/Skeleton';
 
 export default function Hero() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isVideoReady, setIsVideoReady] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    video.playbackRate = 0.5; // stronger slow-motion feel
-
-    const skipFirstSecond = () => {
-      if (video.currentTime < 1) {
-        video.currentTime = 1;
-      }
-      void video.play().catch(() => {
-        /* autoplay might be blocked; safe to ignore */
-      });
+    const setRate = () => {
+      video.playbackRate = 0.9; // leve slow para suavizar
     };
 
-    video.addEventListener('loadedmetadata', skipFirstSecond);
+    setRate();
+    video.addEventListener('loadedmetadata', setRate);
+    video.addEventListener('canplay', setRate);
+
+    void video.play().catch(() => {
+      /* autoplay might be blocked; safe to ignore */
+    });
 
     return () => {
-      video.removeEventListener('loadedmetadata', skipFirstSecond);
+      video.removeEventListener('loadedmetadata', setRate);
+      video.removeEventListener('canplay', setRate);
     };
   }, []);
 
@@ -39,7 +42,7 @@ export default function Hero() {
               Acolhimento humanizado e tratamentos baseados em evidências. Sua
               jornada de transformação começa aqui.
             </p>
-            <div className='flex flex-col sm:flex-row justify-center gap-4'>
+            <div className='flex flex-col sm:flex-row justify-left gap-4'>
               <a
                 href='https://wa.me/5551999977486'
                 target='_blank'
@@ -57,22 +60,33 @@ export default function Hero() {
             </div>
           </div>
           <div className='relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden bg-gray-200'>
+            {!isVideoReady && (
+              <div className='absolute inset-0 z-20'>
+                <Skeleton className='h-full w-full' />
+              </div>
+            )}
             <video
               ref={videoRef}
-              className='absolute inset-0 w-full h-full object-cover'
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+                isVideoReady ? 'opacity-100' : 'opacity-0'
+              }`}
               autoPlay
               muted
               loop
               playsInline
-              preload='metadata'
+              preload='auto'
               poster='/images/og.webp'
               aria-label='Vídeo institucional da clínica'
+              onLoadedMetadata={() => setIsVideoReady(true)}
+              onLoadedData={() => setIsVideoReady(true)}
+              onCanPlay={() => setIsVideoReady(true)}
+              onPlay={() => setIsVideoReady(true)}
+              onError={() => setIsVideoReady(true)}
             >
-              <source src='/video.webm' type='video/webm' />
               <source src='/video.mp4' type='video/mp4' />
-              <source src='/IMG_2613.MOV' type='video/quicktime' />
+              <source src='/video.webm' type='video/webm' />
             </video>
-            <div className='absolute inset-0 bg-gradient-to-b from-black/25 to-black/45' />
+            <div className='absolute inset-0 bg-gradient-to-b from-black/25 to-black/45 pointer-events-none' />
           </div>
         </div>
       </div>
