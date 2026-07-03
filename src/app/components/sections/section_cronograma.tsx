@@ -184,11 +184,11 @@ const TimelineItem = ({
             }`}
           >
             <p
-              className={`text-sm leading-relaxed transition-colors duration-700 ${
-                isVisible
-                  ? isDark
-                    ? 'text-[#fcf8f0]/80'
-                    : 'text-[#3c3b39]/70'
+              className={`text-sm leading-relaxed ${
+                isBonus
+                  ? 'text-[#fcf8f0]'
+                  : isDark
+                  ? 'text-[#fcf8f0]/80'
                   : 'text-[#3c3b39]/70'
               }`}
             >
@@ -198,14 +198,8 @@ const TimelineItem = ({
             {destaque && (
               <div className='mt-3 pt-3 border-t border-current/20'>
                 <p
-                  className={`text-xs italic leading-relaxed transition-colors duration-700 ${
-                    isVisible
-                      ? isBonus
-                        ? 'text-[#2a2928]'
-                        : isDark
-                        ? 'text-[#C67A5B]'
-                        : 'text-[#C67A5B]'
-                      : 'text-[#3c3b39]/50'
+                  className={`text-xs italic leading-relaxed ${
+                    isBonus ? 'text-[#2a2928]' : 'text-[#C67A5B]'
                   }`}
                 >
                   ✨ {destaque}

@@ -187,10 +187,10 @@ export default function SectionQuemSomos() {
 
                 <div className='space-y-4 text-[#3c3b39] text-justify leading-relaxed'>
                   <p>
-                    Fundada em 2018 pelas irmãs Daianna Menote, médica
-                    psiquiatra, e Nicole Menote, psicóloga, a Clínica Menote
-                    nasceu da união entre prática clínica qualificada e um
-                    propósito claro: oferecer cuidado ético e humanizado em
+                    Fundada em 2018 pelas irmãs <b>Daianna Menote</b>, médica
+                    psiquiatra, e <b>Nicole Menote</b>, psicóloga, a Clínica
+                    Menote nasceu da união entre prática clínica qualificada e
+                    um propósito claro: oferecer cuidado ético e humanizado em
                     saúde mental.
                   </p>
                   <p>
@@ -203,11 +203,11 @@ export default function SectionQuemSomos() {
                     acompanhamento técnico.
                   </p>
                   <p>
-                    Atualmente, conta com uma equipe de quase 20 profissionais
-                    cuidadosamente selecionada e alinhada aos valores
-                    institucionais, garantindo um ambiente de acolhimento e
-                    crescimento contínuo — tanto para pacientes quanto para
-                    profissionais.
+                    Atualmente, conta com uma equipe de mais de <b>20</b>{' '}
+                    profissionais cuidadosamente selecionada e alinhada aos
+                    valores institucionais, garantindo um ambiente de
+                    acolhimento e crescimento contínuo — tanto para pacientes
+                    quanto para profissionais.
                   </p>
                 </div>
 
@@ -376,8 +376,10 @@ export default function SectionQuemSomos() {
                   me orgulho profundamente.
                 </p>
                 <p className='font-medium'>
-                  Agora, quero te ajudar a ingressar na clínica com confiança,
-                  estratégia e sem erros desnecessários.
+                  <b>
+                    Agora, quero te ajudar a ingressar na clínica com confiança,
+                    estratégia e sem erros desnecessários.
+                  </b>
                 </p>
               </div>
 

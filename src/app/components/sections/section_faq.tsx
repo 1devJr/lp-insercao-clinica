@@ -48,12 +48,26 @@ const faqItems: FAQItem[] = [
   {
     question: 'As aulas são ao vivo ou gravadas?',
     answer:
-      'As aulas são síncronas, ao vivo, realizadas pelo Zoom, possibilitando interação, troca e acompanhamento direto. Todas as aulas ficam gravadas e disponíveis até o final da mentoria, permitindo que o mentorado revise os conteúdos sempre que necessário.',
+      'As aulas são síncronas, ao vivo, realizadas pelo Google Meet, possibilitando interação, troca e acompanhamento direto. Todas as aulas ficam gravadas e disponíveis até o final da mentoria, permitindo que o mentorado revise os conteúdos sempre que necessário.',
   },
   {
     question: 'Qual é o investimento da mentoria?',
-    answer:
-      'O investimento da mentoria pode ser feito de duas formas: Pagamento à vista com 10% de desconto, o valor fica em R$ 90,00 por aula totalizando R$ 900,00. Pagamento parcelado em 4x de R$ 250,00. As condições são pensadas para facilitar o acesso à formação e ao acompanhamento necessário para a inserção na clínica psicológica.',
+    answer: (
+      <>
+        O investimento da mentoria pode ser feito de duas formas:
+        <br />
+        <br />
+        - Pagamento à vista com 17% de desconto, o valor fica em R$ 99,00 por
+        aula totalizando R$ 990,00.
+        <br />
+        <br />
+        - Pagamento parcelado em até 10x de R$ 120,00.
+        <br />
+        <br />
+        As condições são pensadas para facilitar o acesso à formação e ao
+        acompanhamento necessário para a inserção na clínica psicológica.
+      </>
+    ),
   },
   {
     question: 'Posso me inscrever na mentoria sem ter o CRP ativo?',
