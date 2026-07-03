@@ -25,7 +25,7 @@ export default function SectionHero() {
         <div className='container mx-auto flex flex-col items-start justify-end h-screen relative px-4 pb-20 md:pb-0 z-10'>
           <div className='flex flex-col gap-12 mb-auto mt-auto md:mb-0 md:mt-0 md:absolute md:bottom-60'>
             <h1 className='title text-5xl sm:text-6xl md:text-7xl font-serif font-normal max-w-4xl leading-tight'>
-              Inserção na clínica psicológica
+              Mentoria Inserção na Clínica Psicológica
             </h1>
             <span className='description text-base sm:text-lg md:text-xl max-w-2xl'>
               Aprenda de forma prática e imersiva tudo que precisa saber para
